@@ -1,0 +1,21 @@
+{
+  "require": {
+    "symfony/console": "~2.6",
+    "symfony/filesystem": "~2.6"
+  },
+  "require-dev": {
+    "phpspec/phpspec": "~2.1",
+    "behat/behat": "~3.0",
+    "fabpot/php-cs-fixer": "~1.6",
+    "symfony/filesystem": "~2.6",
+    "beberlei/assert": "~2.3"
+  },
+  "config": {
+    "bin-dir": "bin"
+  },
+  "autoload": {
+    "psr-4": {
+      "Mdb\\Kata\\": "src/"
+    }
+  }
+}

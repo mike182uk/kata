@@ -1,0 +1,7 @@
+formatter.name: pretty
+suites:
+  default:
+    namespace: Mdb\Kata
+    psr4_prefix: Mdb\Kata
+    src_path: src/
+    spec_prefix: spec\
