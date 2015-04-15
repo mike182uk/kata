@@ -5,7 +5,7 @@ Feature: Developer can specify available templates in config file
 
   @requiresKataFixtures
   Scenario: Available programming languages specified in config file
-    Given the config file "config.yml" contains:
+    Given the config file contains:
       """
       templates:
         - { name: composer.json, language: php, template_src_path: %resources%/templates/php/composer.json, template_dest_path: %workspace%/composer.json }

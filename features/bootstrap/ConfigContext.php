@@ -2,22 +2,16 @@
 
 use Behat\Behat\Context\Context;
 use Behat\Gherkin\Node\PyStringNode;
+use Helpers\Application;
 use Helpers\Filesystem;
-use Helpers\Path;
 
 class ConfigContext implements Context
 {
     /**
-     * @Given the config file :configFile contains:
+     * @Given the config file contains:
      */
-    public function theConfigFileContains($configFile, PyStringNode $contents)
+    public function theConfigFileContains(PyStringNode $contents)
     {
-        $configFilePath = sprintf(
-            '%s/%s',
-            Path::getResourcesPath(),
-            $configFile
-        );
-
-        Filesystem::dumpFile($configFilePath, $contents);
+        Filesystem::dumpFile(Application::getConfigPath(), $contents);
     }
 }

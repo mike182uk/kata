@@ -18,17 +18,8 @@ class ContainerAssembler
      */
     public function assemble(Container $container)
     {
-        $this->definePaths($container);
         $this->defineRepositories($container);
         $this->defineConsoleCommands($container);
-    }
-
-    /**
-     * @param Container $container
-     */
-    private function definePaths($container)
-    {
-        $container['path.resources'] = __DIR__.'/../../../resources';
     }
 
     /**

@@ -17,11 +17,13 @@ class Application extends BaseApplication
     private $container;
 
     /**
-     * {@inheritdoc}
+     * @param string $resourcesPath
      */
-    public function __construct()
+    public function __construct($resourcesPath)
     {
         $this->container = new Container();
+
+        $this->container['path.resources'] = $resourcesPath;
 
         $containerAssembler = new ContainerAssembler();
         $containerAssembler->assemble($this->container);

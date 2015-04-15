@@ -5,10 +5,10 @@ require __DIR__.'/../vendor/autoload.php';
 
 use Mdb\Kata\Console\Application;
 
-$app = new Application();
+$resourcesPath = __DIR__.'/../resources';
 
-$app->loadConfiguration('/../resources/config.yml');
+$app = new Application($resourcesPath);
 
+$app->loadConfiguration($resourcesPath.'/config.yml');
 $app->discoverCommands();
-
 $app->run();

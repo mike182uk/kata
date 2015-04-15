@@ -4,7 +4,7 @@ Feature: Developer can specify available programming languages in config file
   I want to be able specify the katas in a config file that is loaded by the application
 
   Scenario: Available programming languages specified in config file
-    Given the config file "config.yml" contains:
+    Given the config file contains:
       """
       languages:
         - { name: PHP, key: php }

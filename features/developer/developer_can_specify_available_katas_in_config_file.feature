@@ -4,7 +4,7 @@ Feature: Developer can specify available katas in config file
   I want to be able specify the katas in a config file that is loaded by the application
 
   Scenario: Available katas specified in config file
-    Given the config file "config.yml" contains:
+    Given the config file contains:
       """
       katas:
         - { name: Fizz Buzz, key: fizz_buzz, summary: Fizz Buzz Kata, requirements_file_path: %resources%/kata/fizz_buzz.md }

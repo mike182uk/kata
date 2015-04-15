@@ -47,19 +47,28 @@ class Application
         self::$testApplication = null;
     }
 
+    /**
+     * @return string
+     */
+    public static function getConfigPath()
+    {
+        return Path::getResourceFilePath('%resources%/config.yml');
+    }
+
     private static function initApplication()
     {
-        $application = new ConsoleApplication();
+        $resourcesPath = Path::getResourcesPath();
+
+        $application = new ConsoleApplication($resourcesPath);
         $application->setAutoExit(false);
 
         $container = $application->getContainer();
 
-        $container['path.resources'] = Path::getResourcesPath();
         $container->extend('repository.katas', function () { return Fixture::getKataRepository(); });
         $container->extend('repository.languages', function () { return Fixture::getLanguageRepository(); });
         $container->extend('repository.templates', function () { return Fixture::getTemplateRepository(); });
 
-        $application->loadConfiguration($container['path.resources'].'/config.yml');
+        $application->loadConfiguration(self::getConfigPath());
         $application->discoverCommands();
 
         self::$application = $application;
