@@ -8,8 +8,16 @@ Feature: Developer can specify available templates in config file
     Given the config file contains:
       """
       templates:
-        - { name: composer.json, language: php, template_src_path: %resources%/templates/php/composer.json, template_dest_path: %workspace%/composer.json }
-        - { name: Gemfile, language: ruby, template_src_path: %resources%/templates/ruby/gemfile, template_dest_path: %workspace%/Gemfile }
+        -
+          name: composer.json
+          language: php
+          template_src_path: %resources%/templates/php/composer.json
+          template_dest_path: %workspace%/composer.json
+        -
+          name: Gemfile
+          language: ruby
+          template_src_path: %resources%/templates/ruby/gemfile
+          template_dest_path: %workspace%/Gemfile
       """
     And the resource files available are:
       | path                                    | content                       |

@@ -7,8 +7,12 @@ Feature: Developer can specify available programming languages in config file
     Given the config file contains:
       """
       languages:
-        - { name: PHP, key: php }
-        - { name: Ruby, key: ruby }
+        -
+          name: PHP
+          key: php
+        -
+          name: Ruby
+          key: ruby
       """
     When I execute the command "list:languages"
     Then I should see in the output:

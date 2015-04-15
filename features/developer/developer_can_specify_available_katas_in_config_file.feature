@@ -7,8 +7,16 @@ Feature: Developer can specify available katas in config file
     Given the config file contains:
       """
       katas:
-        - { name: Fizz Buzz, key: fizz_buzz, summary: Fizz Buzz Kata, requirements_file_path: %resources%/kata/fizz_buzz.md }
-        - { name: String Calculator, key: string_calculator, summary: String Calculator Kata, requirements_file_path: %resources%/kata/string_calculator.md }
+        -
+          name: Fizz Buzz
+          key: fizz_buzz
+          summary: Fizz Buzz Kata
+          requirements_file_path: %resources%/katas/fizz_buzz.md
+        -
+          name: String Calculator
+          key: string_calculator
+          summary: String Calculator Kata
+          requirements_file_path: %resources%/katas/string_calculator.md
       """
     When I execute the command "list:katas"
     Then I should see in the output:
