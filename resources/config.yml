@@ -1,0 +1,31 @@
+languages:
+  -
+    name: PHP
+    key: php
+  -
+    name: Ruby
+    key: ruby
+
+katas:
+  -
+    name: Fizz Buzz
+    key: fizz_buzz
+    summary: Fizz Buzz Kata
+    requirements_file_path: %resources%/katas/fizz_buzz.md
+  -
+    name: String Calculator
+    key: string_calculator
+    summary: String Calculator Kata
+    requirements_file_path: %resources%/katas/string_calculator.md
+
+templates:
+  -
+    name: composer.json
+    language: php
+    template_src_path: %resources%/templates/php/composer.json
+    template_dest_path: %workspace%/composer.json
+  -
+    name: Gemfile
+    language: ruby
+    template_src_path: %resources%/templates/ruby/gemfile
+    template_dest_path: %workspace%/Gemfile

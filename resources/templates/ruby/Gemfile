@@ -1,0 +1,6 @@
+source 'https://rubygems.org'
+
+group :dev do
+  gem 'rspec'
+  gem 'cucumber'
+end
