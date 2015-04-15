@@ -49,9 +49,9 @@ class Application
         $container = $application->getContainer();
 
         $container['path.resources'] = Path::getResourcesPath();
-        $container['repository.katas'] = Fixture::getKataRepository();
-        $container['repository.languages'] = Fixture::getLanguageRepository();
-        $container['repository.templates'] = Fixture::getTemplateRepository();
+        $container->extend('repository.katas', function(){ return Fixture::getKataRepository(); });
+        $container->extend('repository.languages', function(){ return Fixture::getLanguageRepository(); });
+        $container->extend('repository.templates', function(){ return Fixture::getTemplateRepository(); });
 
         $application->discoverCommands();
 
