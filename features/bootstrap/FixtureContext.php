@@ -85,9 +85,9 @@ class FixtureContext implements Context
     }
 
     /**
-     * @Given the resource files exist:
+     * @Given the resource files available are:
      */
-    public function theResourceFilesExist(TableNode $table)
+    public function theResourceFilesAvailableAre(TableNode $table)
     {
         foreach ($table->getHash() as $fileHash) {
             $path = Path::getResourceFilePath($fileHash['path']);
