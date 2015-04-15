@@ -3,11 +3,7 @@
 namespace Helpers;
 
 use Mdb\Kata\Console\Application as ConsoleApplication;
-use Mdb\Kata\Console\Command\CreateWorkspaceCommand;
-use Mdb\Kata\Console\Command\ListKatasCommand;
-use Mdb\Kata\Console\Command\ListLanguagesCommand;
 use Symfony\Component\Console\Tester\ApplicationTester;
-use Symfony\Component\Filesystem\Filesystem as sfFilesystem;
 
 class Application
 {
@@ -50,19 +46,14 @@ class Application
         $application = new ConsoleApplication();
         $application->setAutoExit(false);
 
-        $listKatasCommand = new ListKatasCommand(Fixture::getKataRepository());
-        $listLanguagesCommand = new ListLanguagesCommand(Fixture::getLanguageRepository());
-        $createWorkspaceCommand = new CreateWorkspaceCommand(
-            new sfFilesystem(),
-            Fixture::getKataRepository(),
-            Fixture::getLanguageRepository(),
-            Fixture::getTemplateRepository(),
-            Path::getResourcesPath()
-        );
+        $container = $application->getContainer();
 
-        $application->add($listKatasCommand);
-        $application->add($listLanguagesCommand);
-        $application->add($createWorkspaceCommand);
+        $container['path.resources'] = Path::getResourcesPath();
+        $container['repository.katas'] = Fixture::getKataRepository();
+        $container['repository.languages'] = Fixture::getLanguageRepository();
+        $container['repository.templates'] = Fixture::getTemplateRepository();
+
+        $application->discoverCommands();
 
         self::$application = $application;
     }
