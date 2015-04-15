@@ -41,6 +41,12 @@ class Application
         return self::$testApplication;
     }
 
+    public static function resetApplication()
+    {
+        self::$application = null;
+        self::$testApplication = null;
+    }
+
     private static function initApplication()
     {
         $application = new ConsoleApplication();
@@ -49,10 +55,11 @@ class Application
         $container = $application->getContainer();
 
         $container['path.resources'] = Path::getResourcesPath();
-        $container->extend('repository.katas', function(){ return Fixture::getKataRepository(); });
-        $container->extend('repository.languages', function(){ return Fixture::getLanguageRepository(); });
-        $container->extend('repository.templates', function(){ return Fixture::getTemplateRepository(); });
+        $container->extend('repository.katas', function () { return Fixture::getKataRepository(); });
+        $container->extend('repository.languages', function () { return Fixture::getLanguageRepository(); });
+        $container->extend('repository.templates', function () { return Fixture::getTemplateRepository(); });
 
+        $application->loadConfiguration($container['path.resources'].'/config.yml');
         $application->discoverCommands();
 
         self::$application = $application;

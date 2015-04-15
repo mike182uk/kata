@@ -7,6 +7,8 @@ use Mdb\Kata\Console\Application;
 
 $app = new Application();
 
+$app->loadConfiguration('/../resources/config.yml');
+
 $app->discoverCommands();
 
 $app->run();

@@ -61,7 +61,7 @@ class ConsoleContext implements Context
         Assertion::contains(
             $output,
             (string) $expectedOutput,
-            sprintf("Expected to see:\n\n%s\n\nin the output:\n\n%s\n\n", $output, $expectedOutput)
+            sprintf("Expected to see:\n\n%s\n\nin the output:\n\n%s\n\n", $expectedOutput, $output)
         );
     }
 }

@@ -2,6 +2,8 @@ default:
   suites:
     default:
       contexts:
+        - ApplicationContext
+        - ConfigContext
+        - ConsoleContext
         - CreateWorkspaceContext
         - FixtureContext
-        - ConsoleContext

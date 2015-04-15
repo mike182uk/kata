@@ -85,6 +85,18 @@ class FixtureContext implements Context
     }
 
     /**
+     * @Given the resource files exist:
+     */
+    public function theResourceFilesExist(TableNode $table)
+    {
+        foreach ($table->getHash() as $fileHash) {
+            $path = Path::getResourceFilePath($fileHash['path']);
+
+            Filesystem::dumpFile($path, $fileHash['content']);
+        }
+    }
+
+    /**
      * @beforeScenario @requiresKataFixtures
      */
     public function generateKataFixtures()
@@ -113,5 +125,13 @@ class FixtureContext implements Context
         Fixture::getKataRepository()->clear();
         Fixture::getLanguageRepository()->clear();
         Fixture::getTemplateRepository()->clear();
+    }
+
+    /**
+     * @afterScenario
+     */
+    public function resetApplication()
+    {
+        \Helpers\Application::resetApplication();
     }
 }
