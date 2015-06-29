@@ -5,9 +5,9 @@ Feature: User can specify kata to perform
 
   Background:
     Given the katas available are:
-      | name              | key               | summary                | requirements_file_path                 |
-      | Fizz Buzz         | fizz_buzz         | Fizz Buzz Kata         | %resources%/katas/fizz_buzz.md         |
-      | String Calculator | string_calculator | String Calculator Kata | %resources%/katas/string_calculator.md |
+      | name              | key               | requirements_file_path                 |
+      | Fizz Buzz         | fizz_buzz         | %resources%/katas/fizz_buzz.md         |
+      | String Calculator | string_calculator | %resources%/katas/string_calculator.md |
 
   Scenario: User specifies kata
     When I execute the command "create:workspace" with the options "path=foo,--kata=fizz_buzz"

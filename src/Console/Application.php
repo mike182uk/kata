@@ -86,7 +86,6 @@ class Application extends BaseApplication
                 $kata = new Kata(
                     $kataHash['name'],
                     $kataHash['key'],
-                    $kataHash['summary'],
                     $kataHash['requirements_file_path']
                 );
 

@@ -28,7 +28,6 @@ class FixtureContext implements Context
             $kata = new Kata(
                 $kataHash['name'],
                 $kataHash['key'],
-                $kataHash['summary'],
                 $kataHash['requirements_file_path']
             );
 
@@ -104,8 +103,8 @@ class FixtureContext implements Context
         $kataRepository = Fixture::getKataRepository();
 
         $katas = [
-            new Kata('Foo Kata', 'foo', 'Foo Kata', '%resources%/katas/foo.md'),
-            new Kata('Bar Kata', 'bar', 'Bar Kata', '%resources%/katas/bar.md'),
+            new Kata('Foo Kata', 'foo', '%resources%/katas/foo.md'),
+            new Kata('Bar Kata', 'bar', '%resources%/katas/bar.md'),
         ];
 
         foreach ($katas as $kata) {

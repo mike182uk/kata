@@ -5,9 +5,9 @@ Feature: User can see details of the newly created kata workspace
 
   Background:
     Given the katas available are:
-      | name              | key               | summary                | requirements_file_path                 |
-      | Fizz Buzz         | fizz_buzz         | Fizz Buzz Kata         | %resources%/katas/fizz_buzz.md         |
-      | String Calculator | string_calculator | String Calculator Kata | %resources%/katas/string_calculator.md |
+      | name              | key               | requirements_file_path                 |
+      | Fizz Buzz         | fizz_buzz         | %resources%/katas/fizz_buzz.md         |
+      | String Calculator | string_calculator | %resources%/katas/string_calculator.md |
     And the programming languages available are:
       | name | key  |
       | PHP  | php  |

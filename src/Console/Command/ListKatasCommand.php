@@ -49,13 +49,12 @@ class ListKatasCommand extends Command
             $rows[] = [
                 $kata->getKey(),
                 $kata->getName(),
-                $kata->getSummary(),
             ];
         }
 
         $table = new Table($output);
 
-        $table->setHeaders(['Key', 'Name', 'Summary'])
+        $table->setHeaders(['Key', 'Name'])
               ->setRows($rows);
 
         $table->render();

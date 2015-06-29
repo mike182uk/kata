@@ -17,24 +17,17 @@ class Kata
     /**
      * @var string
      */
-    private $description;
-
-    /**
-     * @var string
-     */
     private $requirementsFilePath;
 
     /**
      * @param string $name
      * @param string $key
-     * @param string $description
      * @param string $requirementsFilePath
      */
-    public function __construct($name, $key, $description, $requirementsFilePath)
+    public function __construct($name, $key, $requirementsFilePath)
     {
         $this->name = $name;
         $this->key = $key;
-        $this->description = $description;
         $this->requirementsFilePath = $requirementsFilePath;
     }
 
@@ -52,14 +45,6 @@ class Kata
     public function getKey()
     {
         return $this->key;
-    }
-
-    /**
-     * @return string
-     */
-    public function getSummary()
-    {
-        return $this->description;
     }
 
     /**
