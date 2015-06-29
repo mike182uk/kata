@@ -1,5 +1,6 @@
 {
   "directories": ["src", "resources"],
+  "files": ["LICENSE", "AUTHORS.md"],
   "main": "bin/kata",
   "output": "kata.phar",
   "chmod": "0755",
