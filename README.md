@@ -7,7 +7,7 @@
 ##Installation
 
 ```bash
-wget https://raw.githubusercontent.com/mike182uk/kata/kata.phar # Download the phar
+wget https://github.com/mike182uk/kata/raw/master/kata.phar # Download the phar
 chmod +x kata.phar # Make the phar executeable
 mv kata.phar /usr/bin/local/kata # Move the phar to your bin directory (optional)
 ```
