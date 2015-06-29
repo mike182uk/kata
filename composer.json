@@ -11,7 +11,8 @@
     "behat/behat": "~3.0",
     "fabpot/php-cs-fixer": "~1.9",
     "symfony/filesystem": "~2.7",
-    "beberlei/assert": "~2.3"
+    "beberlei/assert": "~2.3",
+    "kherge/box": "~2.5"
   },
   "config": {
     "bin-dir": "bin"

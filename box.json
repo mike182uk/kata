@@ -1,0 +1,18 @@
+{
+  "directories": ["src", "resources"],
+  "main": "bin/kata",
+  "output": "kata.phar",
+  "chmod": "0755",
+  "stub": true,
+  "finder": [
+    {
+      "name": "*.php",
+      "exclude": ["Tests"],
+      "in": "vendor"
+    },
+    {
+      "name": "*",
+      "in": "resources"
+    }
+  ]
+}
