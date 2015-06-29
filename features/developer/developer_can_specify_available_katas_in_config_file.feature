@@ -22,9 +22,9 @@ Feature: Developer can specify available katas in config file
     Then I should see in the output:
       """
       +-------------------+-------------------+------------------------+
-      | Name              | Key               | Summary                |
+      | Key               | Name              | Summary                |
       +-------------------+-------------------+------------------------+
-      | Fizz Buzz         | fizz_buzz         | Fizz Buzz Kata         |
-      | String Calculator | string_calculator | String Calculator Kata |
+      | fizz_buzz         | Fizz Buzz         | Fizz Buzz Kata         |
+      | string_calculator | String Calculator | String Calculator Kata |
       +-------------------+-------------------+------------------------+
       """

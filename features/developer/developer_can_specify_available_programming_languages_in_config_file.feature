@@ -18,9 +18,9 @@ Feature: Developer can specify available programming languages in config file
     Then I should see in the output:
       """
       +------+------+
-      | Name | Key  |
+      | Key  | Name |
       +------+------+
-      | PHP  | php  |
-      | Ruby | ruby |
+      | php  | PHP  |
+      | ruby | Ruby |
       +------+------+
       """
