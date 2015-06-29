@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
 group :dev do
-  gem 'rspec'
-  gem 'cucumber'
+  gem 'rspec', '~> 3.3.0'
+  gem 'cucumber', '~> 2.0.0'
 end
