@@ -36,9 +36,11 @@ class ConsoleContext implements Context
                             $value = Path::normalizeWorkspaceFilePath($value);
                             break;
                         case '--kata':
+                        case '-k':
                             Registry::set(self::REGISTRY_KEY_KATA, $value);
                             break;
                         case '--language':
+                        case '-l':
                             Registry::set(self::REGISTRY_KEY_LANGUAGE, $value);
                             break;
                     }

@@ -20,6 +20,12 @@ Feature: User can specify programming language to use for kata
     And the "php" language templates should be present in the workspace
 
   @requiresKataFixtures
+  Scenario: User specifies programming language using the shorthand language option
+    When I execute the command "create:workspace" with the options "path=foo,-l=php"
+    Then a new kata workspace should be created at "foo"
+    And the "php" language templates should be present in the workspace
+
+  @requiresKataFixtures
   Scenario: User specifies invalid language
     When I execute the command "create:workspace" with the options "path=foo,--language=hph"
     Then I should see in the output:

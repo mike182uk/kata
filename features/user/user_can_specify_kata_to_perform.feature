@@ -14,6 +14,11 @@ Feature: User can specify kata to perform
     Then a new kata workspace should be created at "foo"
     And the kata requirements file should be present in the workspace
 
+  Scenario: User specifies kata using the shorthand kata option
+    When I execute the command "create:workspace" with the options "path=foo,-k=fizz_buzz"
+    Then a new kata workspace should be created at "foo"
+    And the kata requirements file should be present in the workspace
+
   Scenario: User specifies invalid kata
     When I execute the command "create:workspace" with the options "path=foo,--kata=bucks_fizz"
     Then I should see in the output:

@@ -89,13 +89,13 @@ class CreateWorkspaceCommand extends Command
             )
             ->addOption(
                 'kata',
-                null,
+                'k',
                 InputOption::VALUE_REQUIRED,
                 'Kata to perform'
             )
             ->addOption(
                 'language',
-                null,
+                'l',
                 InputOption::VALUE_REQUIRED,
                 'Language to use for kata'
             )
