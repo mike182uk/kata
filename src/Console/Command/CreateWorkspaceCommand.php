@@ -64,7 +64,7 @@ class CreateWorkspaceCommand extends Command
         LanguageRepository $languageRepository,
         TemplateRepository $templateRepository,
         $resourcesPath
-    ){
+    ) {
         $this->filesystem = $filesystem;
         $this->kataRepository = $kataRepository;
         $this->languageRepository = $languageRepository;
@@ -147,6 +147,15 @@ class CreateWorkspaceCommand extends Command
         }
 
         $this->installTemplates($language);
+
+        $output->writeln(
+            sprintf(
+                '<info>Kata workspace successfully created at <comment>%s</comment> with the kata <comment>%s</comment> using the language <comment>%s</comment></info>',
+                $path,
+                $kata->getName(),
+                $language->getName()
+            )
+        );
     }
 
     /**

@@ -19,7 +19,7 @@ class Filesystem
      */
     public static function __callStatic($method, $args = [])
     {
-        if (!self::$filesystem instanceof Filesystem) {
+        if (!self::$filesystem instanceof self) {
             self::$filesystem = new sfFilesystem();
         }
 

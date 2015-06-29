@@ -59,11 +59,34 @@ class ConsoleContext implements Context
     public function iShouldSeeInTheOutput(PyStringNode $expectedOutput)
     {
         $output = Application::getTestApplication()->getDisplay();
+        $expectedOutput = $this->parsePlaceholders((string) $expectedOutput);
 
         Assertion::contains(
             $output,
-            (string) $expectedOutput,
+            $expectedOutput,
             sprintf("Expected to see:\n\n%s\n\nin the output:\n\n%s\n\n", $expectedOutput, $output)
         );
+    }
+
+    /**
+     * @param string $content
+     *
+     * @return strig
+     */
+    private function parsePlaceholders($content)
+    {
+        $placeholders = [
+            '%path%' => Path::normalizeWorkspaceFilePath(Registry::get(self::REGISTRY_KEY_WORKSPACE_PATH)),
+        ];
+
+        foreach ($placeholders as $placeholder => $replacement) {
+            $content = preg_replace(
+                sprintf('/%s/', $placeholder),
+                $replacement,
+                $content
+            );
+        }
+
+        return $content;
     }
 }
