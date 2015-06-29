@@ -61,12 +61,12 @@ class ConsoleContext implements Context
         $output = Application::getTestApplication()->getDisplay();
         $expectedOutput = $this->parsePlaceholders((string) $expectedOutput);
 
-        $outputNoNewLines = preg_replace('/\s+/', '', $output);
-        $expectedOutputNoNewLines = preg_replace('/\s+/', '', $expectedOutput);
+        $outputNoWhitespace = preg_replace('/\s+/', '', $output);
+        $expectedOutputNoWhitespace = preg_replace('/\s+/', '', $expectedOutput);
 
         Assertion::contains(
-            $outputNoNewLines,
-            $expectedOutputNoNewLines,
+            $outputNoWhitespace,
+            $expectedOutputNoWhitespace,
             sprintf("Expected to see:\n\n%s\n\nin the output:\n\n%s\n\n", $expectedOutput, $output)
         );
     }

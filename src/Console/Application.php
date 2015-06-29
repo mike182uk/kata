@@ -7,6 +7,8 @@ use Mdb\Kata\Language;
 use Mdb\Kata\Template;
 use Pimple\Container;
 use Symfony\Component\Console\Application as BaseApplication;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Yaml\Yaml;
 
 class Application extends BaseApplication
@@ -21,17 +23,30 @@ class Application extends BaseApplication
 
     /**
      * @param string $resourcesPath
+     * @param string $configPath
      */
-    public function __construct($resourcesPath)
+    public function __construct($resourcesPath, $configPath)
     {
         $this->container = new Container();
 
         $this->container['path.resources'] = $resourcesPath;
+        $this->container['path.config'] = $configPath;
 
         $containerAssembler = new ContainerAssembler();
         $containerAssembler->assemble($this->container);
 
         parent::__construct(self::NAME, self::VERSION);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function doRun(InputInterface $input, OutputInterface $output)
+    {
+        $this->loadConfiguration();
+        $this->discoverCommands();
+
+        parent::doRun($input, $output);
     }
 
     /**
@@ -42,22 +57,21 @@ class Application extends BaseApplication
         return $this->container;
     }
 
-    public function discoverCommands()
+    private function loadConfiguration()
+    {
+        $configPath = $this->getContainer()['path.config'];
+
+        if (file_exists($configPath) && $config = Yaml::parse($configPath)) {
+            $this->parseConfiguration($config);
+        }
+    }
+
+    private function discoverCommands()
     {
         foreach ($this->container->keys() as $key) {
             if (strpos($key, 'console.command.') === 0) {
                 $this->add($this->container[$key]);
             }
-        }
-    }
-
-    /**
-     * @param string $configPath
-     */
-    public function loadConfiguration($configPath)
-    {
-        if (file_exists($configPath) && $config = Yaml::parse($configPath)) {
-            $this->parseConfiguration($config);
         }
     }
 

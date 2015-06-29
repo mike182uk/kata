@@ -7,8 +7,9 @@ use Mdb\Kata\Console\Application;
 
 $resourcesPath = __DIR__.'/../resources';
 
-$app = new Application($resourcesPath);
+$app = new Application(
+    $resourcesPath,
+    $resourcesPath.'/config.yml'
+);
 
-$app->loadConfiguration($resourcesPath.'/config.yml');
-$app->discoverCommands();
 $app->run();

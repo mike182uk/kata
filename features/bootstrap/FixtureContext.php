@@ -2,6 +2,7 @@
 
 use Behat\Behat\Context\Context;
 use Behat\Gherkin\Node\TableNode;
+use Helpers\Application;
 use Helpers\Filesystem;
 use Helpers\Fixture;
 use Helpers\Path;
@@ -131,6 +132,6 @@ class FixtureContext implements Context
      */
     public function resetApplication()
     {
-        \Helpers\Application::resetApplication();
+        Application::resetApplication();
     }
 }

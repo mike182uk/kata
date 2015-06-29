@@ -58,8 +58,9 @@ class Application
     private static function initApplication()
     {
         $resourcesPath = Path::getResourcesPath();
+        $configPath = self::getConfigPath();
 
-        $application = new ConsoleApplication($resourcesPath);
+        $application = new ConsoleApplication($resourcesPath, $configPath);
         $application->setAutoExit(false);
 
         $container = $application->getContainer();
@@ -67,9 +68,6 @@ class Application
         $container->extend('repository.katas', function () { return Fixture::getKataRepository(); });
         $container->extend('repository.languages', function () { return Fixture::getLanguageRepository(); });
         $container->extend('repository.templates', function () { return Fixture::getTemplateRepository(); });
-
-        $application->loadConfiguration(self::getConfigPath());
-        $application->discoverCommands();
 
         self::$application = $application;
     }

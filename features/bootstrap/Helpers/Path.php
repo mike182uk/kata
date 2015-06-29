@@ -34,7 +34,7 @@ class Path
      */
     public static function normalizeWorkspaceFilePath($path)
     {
-        return sys_get_temp_dir().'/behat-kata/'.$path;
+        return sprintf('%s/behat-mdb-kata/%s', sys_get_temp_dir(), $path);
     }
 
     /**
