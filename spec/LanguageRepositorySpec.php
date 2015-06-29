@@ -11,7 +11,7 @@ class LanguageRepositorySpec extends ObjectBehavior
     function let(
         Language $fooLanguage,
         Language $barLanguage
-    ){
+    ) {
         $fooLanguage->getKey()->willReturn('foo');
         $barLanguage->getKey()->willReturn('bar');
 
@@ -22,13 +22,13 @@ class LanguageRepositorySpec extends ObjectBehavior
     function it_should_retrieve_all_languages_from_the_repository(
         Language $fooLanguage,
         Language $barLanguage
-    ){
+    ) {
         $this->findAll()->shouldReturn([$fooLanguage, $barLanguage]);
     }
 
     function it_should_retrieve_a_language_by_its_key(
         Language $fooLanguage
-    ){
+    ) {
         $this->findOneByKey('foo')->shouldReturn($fooLanguage);
     }
 
