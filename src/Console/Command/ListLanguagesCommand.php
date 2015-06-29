@@ -47,14 +47,14 @@ class ListLanguagesCommand extends Command
         /** @var Language $language */
         foreach ($this->languageRepository->findAll() as $language) {
             $rows[] = [
-                $language->getName(),
                 $language->getKey(),
+                $language->getName(),
             ];
         }
 
         $table = new Table($output);
 
-        $table->setHeaders(['Name', 'Key'])
+        $table->setHeaders(['Key', 'Name'])
               ->setRows($rows);
 
         $table->render();

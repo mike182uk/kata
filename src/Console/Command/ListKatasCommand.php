@@ -47,15 +47,15 @@ class ListKatasCommand extends Command
         /** @var Kata $kata */
         foreach ($this->kataRepository->findAll() as $kata) {
             $rows[] = [
-                $kata->getName(),
                 $kata->getKey(),
+                $kata->getName(),
                 $kata->getSummary(),
             ];
         }
 
         $table = new Table($output);
 
-        $table->setHeaders(['Name', 'Key', 'Summary'])
+        $table->setHeaders(['Key', 'Name', 'Summary'])
               ->setRows($rows);
 
         $table->render();

@@ -14,9 +14,9 @@ Feature: User can view available programming languages
     Then I should see in the output:
       """
       +------+------+
-      | Name | Key  |
+      | Key  | Name |
       +------+------+
-      | PHP  | php  |
-      | Ruby | ruby |
+      | php  | PHP  |
+      | ruby | Ruby |
       +------+------+
       """
