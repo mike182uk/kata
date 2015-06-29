@@ -11,7 +11,7 @@ class KataRepositorySpec extends ObjectBehavior
     function let(
         Kata $fooKata,
         Kata $barKata
-    ) {
+    ){
         $fooKata->getKey()->willReturn('foo');
         $barKata->getKey()->willReturn('bar');
 
@@ -22,13 +22,13 @@ class KataRepositorySpec extends ObjectBehavior
     function it_should_retrieve_all_katas_from_the_repository(
         Kata $fooKata,
         Kata $barKata
-    ) {
+    ){
         $this->findAll()->shouldReturn([$fooKata, $barKata]);
     }
 
     function it_should_retrieve_a_kata_by_its_key(
         Kata $fooKata
-    ) {
+    ){
         $this->findOneByKey('foo')->shouldReturn($fooKata);
     }
 

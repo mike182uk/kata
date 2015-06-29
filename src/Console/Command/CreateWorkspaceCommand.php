@@ -64,7 +64,7 @@ class CreateWorkspaceCommand extends Command
         LanguageRepository $languageRepository,
         TemplateRepository $templateRepository,
         $resourcesPath
-    ) {
+    ){
         $this->filesystem = $filesystem;
         $this->kataRepository = $kataRepository;
         $this->languageRepository = $languageRepository;
@@ -149,6 +149,9 @@ class CreateWorkspaceCommand extends Command
         $this->installTemplates($language);
     }
 
+    /**
+     * @param string $path
+     */
     private function createWorkspaceDirectory($path)
     {
         if ($this->filesystem->exists($path)) {

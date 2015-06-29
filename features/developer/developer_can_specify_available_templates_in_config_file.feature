@@ -1,7 +1,7 @@
 Feature: Developer can specify available templates in config file
   In order to make the application aware of the available templates automatically
   As a developer
-  I want to be able specify the katas in a config file that is loaded by the application
+  I want to be able specify the available templates in a config file that is loaded by the application
 
   @requiresKataFixtures
   Scenario: Available programming languages specified in config file

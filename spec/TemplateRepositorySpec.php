@@ -12,7 +12,7 @@ class TemplateRepositorySpec extends ObjectBehavior
         Template $fooTemplate,
         Template $barTemplate,
         Template $bazTemplate
-    ) {
+    ){
         $fooTemplate->getLanguage()->willReturn('foo');
         $barTemplate->getLanguage()->willReturn('foo');
         $bazTemplate->getLanguage()->willReturn('bar');
@@ -26,7 +26,7 @@ class TemplateRepositorySpec extends ObjectBehavior
         Template $fooTemplate,
         Template $barTemplate,
         Template $bazTemplate
-    ) {
+    ){
         $this->findAll()->shouldReturn([$fooTemplate, $barTemplate, $bazTemplate]);
     }
 
@@ -40,7 +40,7 @@ class TemplateRepositorySpec extends ObjectBehavior
     function it_should_retrieve_all_templates_for_a_language(
         Template $fooTemplate,
         Template $barTemplate
-    ) {
+    ){
         $this->findAllByLanguage('foo')->shouldReturn([$fooTemplate, $barTemplate]);
     }
 }

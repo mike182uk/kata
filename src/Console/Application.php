@@ -11,6 +11,9 @@ use Symfony\Component\Yaml\Yaml;
 
 class Application extends BaseApplication
 {
+    const NAME = 'kata';
+    const VERSION = '0.1.0';
+
     /**
      * @var Container
      */
@@ -28,7 +31,7 @@ class Application extends BaseApplication
         $containerAssembler = new ContainerAssembler();
         $containerAssembler->assemble($this->container);
 
-        parent::__construct('kata', '0.0.1');
+        parent::__construct(self::NAME, self::VERSION);
     }
 
     /**
