@@ -22,6 +22,11 @@ class TemplateRepositorySpec extends ObjectBehavior
         $this->insert($bazTemplate);
     }
 
+    function it_should_be_a_repository()
+    {
+        $this->shouldHaveType('Mdb\Kata\Repository');
+    }
+
     function it_should_retrieve_all_templates_from_the_repository(
         Template $fooTemplate,
         Template $barTemplate,

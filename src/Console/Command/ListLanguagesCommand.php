@@ -4,26 +4,15 @@ namespace Mdb\Kata\Console\Command;
 
 use Mdb\Kata\Language;
 use Mdb\Kata\LanguageRepository;
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Helper\Table;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
 
-class ListLanguagesCommand extends Command
+class ListLanguagesCommand extends ListFromRepositoryCommand
 {
-    /**
-     * @var LanguageRepository
-     */
-    private $languageRepository;
-
     /**
      * @param LanguageRepository $languageRepository
      */
     public function __construct(LanguageRepository $languageRepository)
     {
-        $this->languageRepository = $languageRepository;
-
-        parent::__construct();
+        parent::__construct($languageRepository);
     }
 
     /**
@@ -40,23 +29,26 @@ class ListLanguagesCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    public function getTableHeaders()
+    {
+        return ['Key', 'Name'];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getTableRows()
     {
         $rows = [];
 
         /** @var Language $language */
-        foreach ($this->languageRepository->findAll() as $language) {
+        foreach ($this->repository->findAll() as $language) {
             $rows[] = [
                 $language->getKey(),
                 $language->getName(),
             ];
         }
 
-        $table = new Table($output);
-
-        $table->setHeaders(['Key', 'Name'])
-              ->setRows($rows);
-
-        $table->render();
+        return $rows;
     }
 }

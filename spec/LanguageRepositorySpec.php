@@ -19,6 +19,11 @@ class LanguageRepositorySpec extends ObjectBehavior
         $this->insert($barLanguage);
     }
 
+    function it_should_be_a_repository()
+    {
+        $this->shouldHaveType('Mdb\Kata\Repository');
+    }
+
     function it_should_retrieve_all_languages_from_the_repository(
         Language $fooLanguage,
         Language $barLanguage

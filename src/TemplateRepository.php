@@ -2,7 +2,7 @@
 
 namespace Mdb\Kata;
 
-class TemplateRepository
+class TemplateRepository implements Repository
 {
     /**
      * @var Template[]

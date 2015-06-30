@@ -2,7 +2,7 @@
 
 namespace Mdb\Kata;
 
-class LanguageRepository
+class LanguageRepository implements Repository
 {
     /**
      * @var Language[]

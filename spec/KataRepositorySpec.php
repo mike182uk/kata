@@ -19,6 +19,11 @@ class KataRepositorySpec extends ObjectBehavior
         $this->insert($barKata);
     }
 
+    function it_should_be_a_repository()
+    {
+        $this->shouldHaveType('Mdb\Kata\Repository');
+    }
+
     function it_should_retrieve_all_katas_from_the_repository(
         Kata $fooKata,
         Kata $barKata

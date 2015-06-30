@@ -4,26 +4,15 @@ namespace Mdb\Kata\Console\Command;
 
 use Mdb\Kata\Kata;
 use Mdb\Kata\KataRepository;
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Helper\Table;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
 
-class ListKatasCommand extends Command
+class ListKatasCommand extends ListFromRepositoryCommand
 {
     /**
-     * @var KataRepository
+     * @param KataRepository $kataRepository
      */
-    private $kataRepository;
-
-    /**
-     * @param KataRepository $languageRepository
-     */
-    public function __construct(KataRepository $languageRepository)
+    public function __construct(KataRepository $kataRepository)
     {
-        $this->kataRepository = $languageRepository;
-
-        parent::__construct();
+        parent::__construct($kataRepository);
     }
 
     /**
@@ -40,23 +29,26 @@ class ListKatasCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    public function getTableHeaders()
+    {
+        return ['Key', 'Name'];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getTableRows()
     {
         $rows = [];
 
         /** @var Kata $kata */
-        foreach ($this->kataRepository->findAll() as $kata) {
+        foreach ($this->repository->findAll() as $kata) {
             $rows[] = [
                 $kata->getKey(),
                 $kata->getName(),
             ];
         }
 
-        $table = new Table($output);
-
-        $table->setHeaders(['Key', 'Name'])
-              ->setRows($rows);
-
-        $table->render();
+        return $rows;
     }
 }
