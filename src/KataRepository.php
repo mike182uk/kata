@@ -12,8 +12,12 @@ class KataRepository implements Repository
     /**
      * @param Kata $kata
      */
-    public function insert(Kata $kata)
+    public function insert($kata)
     {
+        if (!$kata instanceof Kata) {
+            throw new \InvalidArgumentException();
+        }
+
         $this->katas[] = $kata;
     }
 
@@ -23,6 +27,11 @@ class KataRepository implements Repository
     public function findAll()
     {
         return $this->katas;
+    }
+
+    public function clear()
+    {
+        $this->katas = [];
     }
 
     /**
@@ -45,10 +54,5 @@ class KataRepository implements Repository
     public function findOneByRandom()
     {
         return $this->katas[array_rand($this->katas)];
-    }
-
-    public function clear()
-    {
-        $this->katas = [];
     }
 }

@@ -27,6 +27,11 @@ class TemplateRepositorySpec extends ObjectBehavior
         $this->shouldHaveType('Mdb\Kata\Repository');
     }
 
+    function it_should_throw_an_exception_when_trying_to_insert_anything_other_than_a_template()
+    {
+        $this->shouldThrow('InvalidArgumentException')->during('insert', [new \stdClass()]);
+    }
+
     function it_should_retrieve_all_templates_from_the_repository(
         Template $fooTemplate,
         Template $barTemplate,

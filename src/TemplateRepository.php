@@ -12,8 +12,12 @@ class TemplateRepository implements Repository
     /**
      * @param Template $template
      */
-    public function insert(Template $template)
+    public function insert($template)
     {
+        if (!$template instanceof Template) {
+            throw new \InvalidArgumentException();
+        }
+
         $this->templates[] = $template;
     }
 
@@ -23,6 +27,11 @@ class TemplateRepository implements Repository
     public function findAll()
     {
         return $this->templates;
+    }
+
+    public function clear()
+    {
+        $this->templates = [];
     }
 
     /**
@@ -35,10 +44,5 @@ class TemplateRepository implements Repository
         return array_filter($this->templates, function (Template $template) use ($language) {
             return $template->getLanguage() == $language;
         });
-    }
-
-    public function clear()
-    {
-        $this->templates = [];
     }
 }

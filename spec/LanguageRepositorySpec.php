@@ -24,6 +24,11 @@ class LanguageRepositorySpec extends ObjectBehavior
         $this->shouldHaveType('Mdb\Kata\Repository');
     }
 
+    function it_should_throw_an_exception_when_trying_to_insert_anything_other_than_a_language()
+    {
+        $this->shouldThrow('InvalidArgumentException')->during('insert', [new \stdClass()]);
+    }
+
     function it_should_retrieve_all_languages_from_the_repository(
         Language $fooLanguage,
         Language $barLanguage

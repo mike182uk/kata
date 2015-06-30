@@ -24,6 +24,11 @@ class KataRepositorySpec extends ObjectBehavior
         $this->shouldHaveType('Mdb\Kata\Repository');
     }
 
+    function it_should_throw_an_exception_when_trying_to_insert_anything_other_than_a_kata()
+    {
+        $this->shouldThrow('InvalidArgumentException')->during('insert', [new \stdClass()]);
+    }
+
     function it_should_retrieve_all_katas_from_the_repository(
         Kata $fooKata,
         Kata $barKata

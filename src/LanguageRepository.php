@@ -12,8 +12,12 @@ class LanguageRepository implements Repository
     /**
      * @param Language $language
      */
-    public function insert(Language $language)
+    public function insert($language)
     {
+        if (!$language instanceof Language) {
+            throw new \InvalidArgumentException();
+        }
+
         $this->languages[] = $language;
     }
 
@@ -23,6 +27,11 @@ class LanguageRepository implements Repository
     public function findAll()
     {
         return $this->languages;
+    }
+
+    public function clear()
+    {
+        $this->languages = [];
     }
 
     /**
@@ -45,10 +54,5 @@ class LanguageRepository implements Repository
     public function findOneByRandom()
     {
         return $this->languages[array_rand($this->languages)];
-    }
-
-    public function clear()
-    {
-        $this->languages = [];
     }
 }
