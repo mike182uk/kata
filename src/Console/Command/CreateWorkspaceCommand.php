@@ -2,29 +2,33 @@
 
 namespace Mdb\Kata\Console\Command;
 
-use InvalidArgumentException;
-use Mdb\Kata\Kata;
+use League\Tactician\CommandBus;
 use Mdb\Kata\KataRepository;
-use Mdb\Kata\Language;
 use Mdb\Kata\LanguageRepository;
-use Mdb\Kata\TemplateRepository;
+use Mdb\Kata\Workspace\Command\CreateWorkspaceDirectoryCommand;
+use Mdb\Kata\Workspace\Command\InstallLanguageTemplatesCommand;
+use Mdb\Kata\Workspace\Command\InstallRequirementsFileCommand;
+use Mdb\Kata\Workspace\Command\ValidateKataCommand;
+use Mdb\Kata\Workspace\Command\ValidateLanguageCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Filesystem\Filesystem;
 
 class CreateWorkspaceCommand extends Command
 {
-    const RESOURCES_PATH_PLACEHOLDER = '%resources%';
-    const WORKSPACE_PATH_PLACEHOLDER = '%workspace%';
     const REQUIREMENTS_FILE_FILENAME = 'requirements.md';
 
     /**
-     * @var Filesystem
+     * @var CommandBus
      */
-    private $filesystem;
+    private $commandBus;
+
+    /**
+     * @var string
+     */
+    private $resourcesPath;
 
     /**
      * @var KataRepository
@@ -37,39 +41,21 @@ class CreateWorkspaceCommand extends Command
     private $languageRepository;
 
     /**
-     * @var TemplateRepository
-     */
-    private $templateRepository;
-
-    /**
-     * @var string
-     */
-    private $resourcesPath;
-
-    /**
-     * @var string
-     */
-    private $workspacePath;
-
-    /**
-     * @param Filesystem         $filesystem
+     * @param CommandBus         $commandBus
+     * @param string             $resourcesPath
      * @param KataRepository     $kataRepository
      * @param LanguageRepository $languageRepository
-     * @param TemplateRepository $templateRepository
-     * @param string             $resourcesPath
      */
     public function __construct(
-        Filesystem $filesystem,
+        CommandBus $commandBus,
+        $resourcesPath,
         KataRepository $kataRepository,
-        LanguageRepository $languageRepository,
-        TemplateRepository $templateRepository,
-        $resourcesPath
+        LanguageRepository $languageRepository
     ) {
-        $this->filesystem = $filesystem;
+        $this->commandBus = $commandBus;
+        $this->resourcesPath = $resourcesPath;
         $this->kataRepository = $kataRepository;
         $this->languageRepository = $languageRepository;
-        $this->templateRepository = $templateRepository;
-        $this->resourcesPath = $resourcesPath;
 
         parent::__construct();
     }
@@ -107,143 +93,55 @@ class CreateWorkspaceCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $path = $input->getArgument('path');
-        $this->createWorkspaceDirectory($path);
-        $this->workspacePath = $path;
+        $workspacePath = rtrim($input->getArgument('path'), '/');
+        $kata = $input->getOption('kata');
+        $language = $input->getOption('language');
 
-        $kataKey = $input->getOption('kata');
-        $kata = $this->kataRepository->findOneByKey($kataKey);
-
-        if (!is_null($kataKey) && !$kata instanceof Kata) {
-            $this->removeWorkspace($this->workspacePath);
-
-            throw new InvalidArgumentException(
-                sprintf('The kata "%s" is not a valid kata. Please specify a valid kata.', $kataKey)
-            );
+        if (is_null($kata)) {
+            $kata = $this->kataRepository->findOneByRandom()->getKey();
         }
 
-        if (!$kata) {
-            $kata = $this->kataRepository->findOneByRandom();
+        if (is_null($language)) {
+            $language = $this->languageRepository->findOneByRandom()->getKey();
         }
 
-        $this->installRequirementsFile(
-            sprintf('%s/%s', $path, self::REQUIREMENTS_FILE_FILENAME),
-            $kata
-        );
+        $commands = [
+            new ValidateKataCommand($kata),
+            new ValidateLanguageCommand($language),
+            new CreateWorkspaceDirectoryCommand($workspacePath),
+            new InstallRequirementsFileCommand(
+                $kata,
+                sprintf('%s/%s', $workspacePath, self::REQUIREMENTS_FILE_FILENAME)
+            ),
+            new InstallLanguageTemplatesCommand($language, $workspacePath),
+        ];
 
-        $languageKey = $input->getOption('language');
-        $language = $this->languageRepository->findOneByKey($languageKey);
-
-        if (!is_null($languageKey) && !$language instanceof Language) {
-            $this->removeWorkspace($this->workspacePath);
-
-            throw new InvalidArgumentException(
-                sprintf('The language "%s" is not a valid language. Please specify a valid language.', $languageKey)
-            );
+        foreach ($commands as $command) {
+            $this->commandBus->handle($command);
         }
-
-        if (!$language) {
-            $language = $this->languageRepository->findOneByRandom();
-        }
-
-        $this->installTemplates($language);
 
         $output->writeln(
-            sprintf(
-                '<info>Kata workspace successfully created at <comment>%s</comment> with the kata <comment>%s</comment> using the language <comment>%s</comment></info>',
-                $path,
-                $kata->getName(),
-                $language->getName()
-            )
-        );
-    }
-
-    /**
-     * @param string $path
-     */
-    private function createWorkspaceDirectory($path)
-    {
-        if ($this->filesystem->exists($path)) {
-            throw new InvalidArgumentException('The path you have specified already exists. Please specify an alternative workspace path.');
-        }
-
-        $this->filesystem->mkdir($path);
-    }
-
-    /**
-     * @param string $destination
-     * @param Kata   $kata
-     */
-    private function installRequirementsFile($destination, Kata $kata)
-    {
-        $kataRequirementsFile = $this->getResourceFilePath(
-            $kata->getRequirementsFilePath()
-        );
-
-        $this->filesystem->copy(
-            $kataRequirementsFile,
-            $destination
-        );
-    }
-
-    /**
-     * @param Language $language
-     */
-    private function installTemplates(Language $language)
-    {
-        $templates = $this->templateRepository->findAllByLanguage(
-            $language->getKey()
-        );
-
-        foreach ($templates as $template) {
-            $src = $this->getResourceFilePath(
-                $template->getSrcFilePath()
-            );
-
-            $dest = $this->getWorkspaceFilePath(
-                $template->getDestFilePath()
-            );
-
-            $this->filesystem->copy(
-                $src,
-                $dest
-            );
-        }
-    }
-
-    /**
-     * @param string $resourceFile
-     *
-     * @return string
-     */
-    private function getResourceFilePath($resourceFile)
-    {
-        return preg_replace(
-            sprintf('/%s/', self::RESOURCES_PATH_PLACEHOLDER),
-            $this->resourcesPath,
-            $resourceFile
-        );
-    }
-
-    /**
-     * @param string $workspaceFile
-     *
-     * @return string
-     */
-    private function getWorkspaceFilePath($workspaceFile)
-    {
-        return preg_replace(
-            sprintf('/%s/', self::WORKSPACE_PATH_PLACEHOLDER),
-            $this->workspacePath,
-            $workspaceFile
+            $this->getSuccessMessage($workspacePath, $kata, $language)
         );
     }
 
     /**
      * @param string $workspacePath
+     * @param string $kata
+     * @param string $language
+     *
+     * @return string
      */
-    private function removeWorkspace($workspacePath)
+    private function getSuccessMessage($workspacePath, $kata, $language)
     {
-        $this->filesystem->remove($workspacePath);
+        $kata = $this->kataRepository->findOneByKey($kata)->getName();
+        $language = $this->languageRepository->findOneByKey($language)->getName();
+
+        return sprintf(
+            '<info>Kata workspace successfully created at <comment>%s</comment> with the kata <comment>%s</comment> using the language <comment>%s</comment></info>',
+            $workspacePath,
+            $kata,
+            $language
+        );
     }
 }

@@ -9,16 +9,19 @@ Feature: User can specify kata to perform
       | Fizz Buzz         | fizz_buzz         | %resources%/katas/fizz_buzz.md         |
       | String Calculator | string_calculator | %resources%/katas/string_calculator.md |
 
+  @requiresLanguageFixtures
   Scenario: User specifies kata
     When I execute the command "create:workspace" with the options "path=foo,--kata=fizz_buzz"
     Then a new kata workspace should be created at "foo"
     And the kata requirements file should be present in the workspace
 
+  @requiresLanguageFixtures
   Scenario: User specifies kata using the shorthand kata option
     When I execute the command "create:workspace" with the options "path=foo,-k=fizz_buzz"
     Then a new kata workspace should be created at "foo"
     And the kata requirements file should be present in the workspace
 
+  @requiresLanguageFixtures
   Scenario: User specifies invalid kata
     When I execute the command "create:workspace" with the options "path=foo,--kata=bucks_fizz"
     Then I should see in the output:

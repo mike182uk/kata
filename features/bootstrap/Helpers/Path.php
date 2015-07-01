@@ -2,7 +2,7 @@
 
 namespace Helpers;
 
-use Mdb\Kata\Console\Command\CreateWorkspaceCommand;
+use Mdb\Kata\Console\Utility\PathNormalizer;
 
 class Path
 {
@@ -53,7 +53,7 @@ class Path
     public static function getResourceFilePath($resourceFile)
     {
         return preg_replace(
-            sprintf('/%s/', CreateWorkspaceCommand::RESOURCES_PATH_PLACEHOLDER),
+            sprintf('/%s/', PathNormalizer::RESOURCES_PATH_PLACEHOLDER),
             self::getResourcesPath(),
             $resourceFile
         );
@@ -68,7 +68,7 @@ class Path
     public static function getWorkspaceFilePath($workspacePath, $workspaceFile)
     {
         $path = preg_replace(
-            sprintf('/%s/', CreateWorkspaceCommand::WORKSPACE_PATH_PLACEHOLDER),
+            sprintf('/%s/', PathNormalizer::WORKSPACE_PATH_PLACEHOLDER),
             $workspacePath,
             $workspaceFile
         );

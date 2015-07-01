@@ -2,6 +2,7 @@
 
 namespace Mdb\Kata\Console;
 
+use Mdb\Kata\Console\Utility\PathNormalizer;
 use Mdb\Kata\Kata;
 use Mdb\Kata\Language;
 use Mdb\Kata\Template;
@@ -100,7 +101,10 @@ class Application extends BaseApplication
                 $kata = new Kata(
                     $kataHash['name'],
                     $kataHash['key'],
-                    $kataHash['requirements_file_path']
+                    PathNormalizer::normalizeResourceFilePath(
+                        $this->container['path.resources'],
+                        $kataHash['requirements_file_path']
+                    )
                 );
 
                 $kataRepository->insert($kata);
@@ -114,7 +118,10 @@ class Application extends BaseApplication
                 $template = new Template(
                     $templateHash['name'],
                     $templateHash['language'],
-                    $templateHash['template_src_path'],
+                    PathNormalizer::normalizeResourceFilePath(
+                        $this->container['path.resources'],
+                        $templateHash['template_src_path']
+                    ),
                     $templateHash['template_dest_path']
                 );
 

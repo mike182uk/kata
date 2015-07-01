@@ -29,13 +29,14 @@ class FixtureContext implements Context
             $kata = new Kata(
                 $kataHash['name'],
                 $kataHash['key'],
-                $kataHash['requirements_file_path']
+                Path::getResourceFilePath($kataHash['requirements_file_path'])
             );
 
-            if ($kataHash['requirements_file_path'] != '') {
-                $path = Path::getResourceFilePath($kataHash['requirements_file_path']);
-
-                Filesystem::dumpFile($path, uniqid());
+            if ($kata->getRequirementsFilePath() != '') {
+                Filesystem::dumpFile(
+                    $kata->getRequirementsFilePath(),
+                    uniqid()
+                );
             }
 
             $kataRepository->insert($kata);
@@ -70,14 +71,12 @@ class FixtureContext implements Context
             $template = new Template(
                 $templateHash['name'],
                 $templateHash['language'],
-                $templateHash['template_src_path'],
+                Path::getResourceFilePath($templateHash['template_src_path']),
                 $templateHash['template_dest_path']
             );
 
-            if ($templateHash['template_src_path'] != '') {
-                $path = Path::getResourceFilePath($templateHash['template_src_path']);
-
-                Filesystem::dumpFile($path, uniqid());
+            if ($template->getSrcFilePath() != '') {
+                Filesystem::dumpFile($template->getSrcFilePath(), uniqid());
             }
 
             $templateRepository->insert($template);
@@ -104,16 +103,31 @@ class FixtureContext implements Context
         $kataRepository = Fixture::getKataRepository();
 
         $katas = [
-            new Kata('Foo Kata', 'foo', '%resources%/katas/foo.md'),
-            new Kata('Bar Kata', 'bar', '%resources%/katas/bar.md'),
+            new Kata('Foo', 'foo', Path::getResourceFilePath('%resources%/katas/foo.md')),
+            new Kata('Bar', 'bar', Path::getResourceFilePath('%resources%/katas/bar.md')),
         ];
 
         foreach ($katas as $kata) {
-            $requirementsFilePath = Path::getResourceFilePath($kata->getRequirementsFilePath());
-
-            Filesystem::dumpFile($requirementsFilePath, uniqid());
+            Filesystem::dumpFile($kata->getRequirementsFilePath(), uniqid());
 
             $kataRepository->insert($kata);
+        }
+    }
+
+    /**
+     * @beforeScenario @requiresLanguageFixtures
+     */
+    public function generateLanguageFixtures()
+    {
+        $languageRepository = Fixture::getLanguageRepository();
+
+        $languages = [
+            new Language('Foo', 'foo'),
+            new Language('Bar', 'bar'),
+        ];
+
+        foreach ($languages as $language) {
+            $languageRepository->insert($language);
         }
     }
 
