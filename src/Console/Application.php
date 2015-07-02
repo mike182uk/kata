@@ -62,7 +62,9 @@ class Application extends BaseApplication
         $configPath = $this->getContainer()['path.config'];
 
         if (file_exists($configPath) && $config = Yaml::parse($configPath)) {
-            $this->parseConfiguration($config);
+            $this->initLanguagesRepositoryFromConfig($config);
+            $this->initKatasRepositoryFromConfig($config);
+            $this->initTemplateRepositoryFromConfig($config);
         }
     }
 
@@ -78,48 +80,66 @@ class Application extends BaseApplication
     /**
      * @param array $config
      */
-    private function parseConfiguration($config)
+    private function initLanguagesRepositoryFromConfig($config)
     {
-        if (array_key_exists('languages', $config)) {
-            $languageRepository = $this->container['repository.languages'];
-
-            foreach ($config['languages'] as $languageHash) {
-                $language = new Language(
-                    $languageHash['name'],
-                    $languageHash['key']
-                );
-
-                $languageRepository->insert($language);
-            }
+        if (!array_key_exists('languages', $config)) {
+            return;
         }
 
-        if (array_key_exists('katas', $config)) {
-            $kataRepository = $this->container['repository.katas'];
+        $languageRepository = $this->container['repository.languages'];
 
-            foreach ($config['katas'] as $kataHash) {
-                $kata = new Kata(
-                    $kataHash['name'],
-                    $kataHash['key'],
-                    sprintf('%s/%s', $this->container['path.resources'], $kataHash['requirements_file_path'])
-                );
+        foreach ($config['languages'] as $languageHash) {
+            $language = new Language(
+                $languageHash['name'],
+                $languageHash['key']
+            );
 
-                $kataRepository->insert($kata);
-            }
+            $languageRepository->insert($language);
+        }
+    }
+
+    /**
+     * @param array $config
+     */
+    private function initKatasRepositoryFromConfig($config)
+    {
+        if (!array_key_exists('katas', $config)) {
+            return;
         }
 
-        if (array_key_exists('templates', $config)) {
-            $templateRepository = $this->container['repository.templates'];
+        $kataRepository = $this->container['repository.katas'];
 
-            foreach ($config['templates'] as $templateHash) {
-                $template = new Template(
-                    $templateHash['name'],
-                    $templateHash['language'],
-                    sprintf('%s/%s', $this->container['path.resources'], $templateHash['template_src_path']),
-                    $templateHash['template_dest_path']
-                );
+        foreach ($config['katas'] as $kataHash) {
+            $kata = new Kata(
+                $kataHash['name'],
+                $kataHash['key'],
+                sprintf('%s/%s', $this->container['path.resources'], $kataHash['requirements_file_path'])
+            );
 
-                $templateRepository->insert($template);
-            }
+            $kataRepository->insert($kata);
+        }
+    }
+
+    /**
+     * @param array $config
+     */
+    private function initTemplateRepositoryFromConfig($config)
+    {
+        if (!array_key_exists('templates', $config)) {
+            return;
+        }
+
+        $templateRepository = $this->container['repository.templates'];
+
+        foreach ($config['templates'] as $templateHash) {
+            $template = new Template(
+                $templateHash['name'],
+                $templateHash['language'],
+                sprintf('%s/%s', $this->container['path.resources'], $templateHash['template_src_path']),
+                $templateHash['template_dest_path']
+            );
+
+            $templateRepository->insert($template);
         }
     }
 }
