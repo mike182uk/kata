@@ -4,6 +4,10 @@
 [![Scrutinizer Quality Score](https://img.shields.io/scrutinizer/g/mike182uk/kata.svg?style=flat-square)](https://scrutinizer-ci.com/g/mike182uk/kata/)
 [![License](https://img.shields.io/github/license/mike182uk/kata.svg?style=flat-square)](https://github.com/mike182uk/kata)
 
+##Prerequisites
+
+1. PHP >=5.5.0
+
 ##Installation
 
 ```bash
