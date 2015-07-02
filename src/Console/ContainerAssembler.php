@@ -34,7 +34,10 @@ class ContainerAssembler
         $this->defineWorkspaceCommandHandlers($container);
     }
 
-    private function defineUtilites($container)
+    /**
+     * @param Container $container
+     */
+    private function defineUtilites(Container $container)
     {
         $container['utility.filesystem'] = function ($c) {
             return new Filesystem();

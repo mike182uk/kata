@@ -51,11 +51,11 @@ class CreateWorkspaceContext implements Context, SnippetAcceptingContext
         $selectedKataKey = Registry::get(ConsoleContext::REGISTRY_KEY_KATA);
         $workspacePath = Registry::get(ConsoleContext::REGISTRY_KEY_WORKSPACE_PATH);
         $kata = Fixture::getKataRepository()->findOneByKey($selectedKataKey);
-        $kataRequirementsFile = Path::getResourceFilePath($kata->getRequirementsFilePath());
+        $kataRequirementsFile = $kata->getRequirementsFilePath();
 
         $expectedFile = sprintf(
             '%s/%s',
-            Path::normalizeWorkspaceFilePath($workspacePath),
+            $workspacePath,
             CreateWorkspaceCommand::REQUIREMENTS_FILE_FILENAME
         );
 
@@ -79,14 +79,14 @@ class CreateWorkspaceContext implements Context, SnippetAcceptingContext
 
         $expectedFile = sprintf(
             '%s/%s',
-            Path::normalizeWorkspaceFilePath($workspacePath),
+            $workspacePath,
             CreateWorkspaceCommand::REQUIREMENTS_FILE_FILENAME
         );
 
         Assertion::file($expectedFile);
 
         foreach ($katas as $kata) {
-            $kataRequirementsFile = Path::getResourceFilePath($kata->getRequirementsFilePath());
+            $kataRequirementsFile = $kata->getRequirementsFilePath();
             $kataRequirementsFileContents = file_get_contents($kataRequirementsFile);
             $expectedFileContents = file_get_contents($expectedFile);
 
@@ -114,7 +114,7 @@ class CreateWorkspaceContext implements Context, SnippetAcceptingContext
             $templatesForCurrentLanguagePresent = true;
 
             foreach ($templates as $template) {
-                $templatePath = Path::getResourceFilePath($template->getSrcFilePath());
+                $templatePath = $template->getSrcFilePath();
                 $templatePathContents = file_get_contents($templatePath);
 
                 $destinationPath = Path::getWorkspaceFilePath(
@@ -153,7 +153,7 @@ class CreateWorkspaceContext implements Context, SnippetAcceptingContext
         $templatesPresent = true;
 
         foreach ($templates as $template) {
-            $templatePath = Path::getResourceFilePath($template->getSrcFilePath());
+            $templatePath = $template->getSrcFilePath();
             $templatePathContents = file_get_contents($templatePath);
 
             $destinationPath = Path::getWorkspaceFilePath(
@@ -185,7 +185,7 @@ class CreateWorkspaceContext implements Context, SnippetAcceptingContext
         $workspacePath = Registry::get(ConsoleContext::REGISTRY_KEY_WORKSPACE_PATH);
 
         if ($workspacePath) {
-            Filesystem::remove(Path::normalizeWorkspaceFilePath($workspacePath));
+            Filesystem::remove($workspacePath);
         }
 
         foreach (Path::getCreatedPaths() as $path) {

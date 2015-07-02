@@ -20,16 +20,16 @@ class FixtureContext implements Context
         $kataRepository = Fixture::getKataRepository();
 
         foreach ($table->getHash() as $kataHash) {
-            // we dont always need to show the "requirements_file_path" field in the feature file
-            // so if it is not specified, set it to an empty string so the object can still be constructed
             if (!array_key_exists('requirements_file_path', $kataHash)) {
                 $kataHash['requirements_file_path'] = '';
+            } else {
+                $kataHash['requirements_file_path'] = Path::getResourceFilePath($kataHash['requirements_file_path']);
             }
 
             $kata = new Kata(
                 $kataHash['name'],
                 $kataHash['key'],
-                Path::getResourceFilePath($kataHash['requirements_file_path'])
+                $kataHash['requirements_file_path']
             );
 
             if ($kata->getRequirementsFilePath() != '') {
@@ -103,8 +103,8 @@ class FixtureContext implements Context
         $kataRepository = Fixture::getKataRepository();
 
         $katas = [
-            new Kata('Foo', 'foo', Path::getResourceFilePath('%resources%/katas/foo.md')),
-            new Kata('Bar', 'bar', Path::getResourceFilePath('%resources%/katas/bar.md')),
+            new Kata('Foo', 'foo', Path::getResourceFilePath('katas/foo.md')),
+            new Kata('Bar', 'bar', Path::getResourceFilePath('katas/bar.md')),
         ];
 
         foreach ($katas as $kata) {

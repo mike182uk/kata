@@ -12,8 +12,7 @@ use Symfony\Component\Filesystem\Filesystem;
 class InstallLanguageTemplatesHandlerSpec extends ObjectBehavior
 {
     const LANGUAGE = 'foo';
-    const RESOURCES_PATH = './bar/';
-    const WORKSPACE_PATH = './baz/';
+    const WORKSPACE_PATH = './baz';
 
     function let(
         Filesystem $filesystem,
@@ -49,8 +48,8 @@ class InstallLanguageTemplatesHandlerSpec extends ObjectBehavior
 
         $templateRepository->findAllByLanguage(self::LANGUAGE)->willReturn([$template1, $template2]);
 
-        $filesystem->copy($template1Src, $template1Dest)->shouldBeCalled();
-        $filesystem->copy($template2Src, $template2Dest)->shouldBeCalled();
+        $filesystem->copy($template1Src, sprintf('%s/%s', self::WORKSPACE_PATH, $template1Dest))->shouldBeCalled();
+        $filesystem->copy($template2Src, sprintf('%s/%s', self::WORKSPACE_PATH, $template2Dest))->shouldBeCalled();
 
         $this->handle($command);
     }

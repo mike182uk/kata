@@ -5,9 +5,9 @@ Feature: User does not have to specify kata to perform
 
   Background:
     Given the katas available are:
-      | name              | key               | requirements_file_path                 |
-      | Fizz Buzz         | fizz_buzz         | %resources%/katas/fizz_buzz.md         |
-      | String Calculator | string_calculator | %resources%/katas/string_calculator.md |
+      | name              | key               | requirements_file_path     |
+      | Fizz Buzz         | fizz_buzz         | katas/fizz_buzz.md         |
+      | String Calculator | string_calculator | katas/string_calculator.md |
 
   @requiresLanguageFixtures
   Scenario: User does not specify kata

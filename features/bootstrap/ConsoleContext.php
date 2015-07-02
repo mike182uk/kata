@@ -32,8 +32,8 @@ class ConsoleContext implements Context
                 if ($command == 'create:workspace') {
                     switch ($option) {
                         case 'path':
-                            Registry::set(self::REGISTRY_KEY_WORKSPACE_PATH, $value);
                             $value = Path::normalizeWorkspaceFilePath($value);
+                            Registry::set(self::REGISTRY_KEY_WORKSPACE_PATH, $value);
                             break;
                         case '--kata':
                         case '-k':
@@ -79,7 +79,7 @@ class ConsoleContext implements Context
     private function parsePlaceholders($content)
     {
         $placeholders = [
-            '%path%' => Path::normalizeWorkspaceFilePath(Registry::get(self::REGISTRY_KEY_WORKSPACE_PATH)),
+            '%path%' => Registry::get(self::REGISTRY_KEY_WORKSPACE_PATH),
         ];
 
         foreach ($placeholders as $placeholder => $replacement) {

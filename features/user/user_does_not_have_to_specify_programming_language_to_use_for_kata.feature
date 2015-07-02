@@ -9,9 +9,9 @@ Feature: User does not have to specify programming language to use for kata
       | PHP  | php  |
       | Ruby | ruby |
     And the programming language templates available are:
-      | name          | language | template_src_path                       | template_dest_path        |
-      | composer.json | php      | %resources%/templates/php/composer.json | %workspace%/composer.json |
-      | Gemfile       | ruby     | %resources%/templates/ruby/gemfile      | %workspace%/Gemfile       |
+      | name          | language | template_src_path           | template_dest_path |
+      | composer.json | php      | templates/php/composer.json | composer.json      |
+      | Gemfile       | ruby     | templates/ruby/gemfile      | Gemfile            |
 
   @requiresKataFixtures
   Scenario: User does not specify programming language

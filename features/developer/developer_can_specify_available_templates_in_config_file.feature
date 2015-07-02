@@ -11,18 +11,18 @@ Feature: Developer can specify available templates in config file
         -
           name: composer.json
           language: php
-          template_src_path: %resources%/templates/php/composer.json
-          template_dest_path: %workspace%/composer.json
+          template_src_path: templates/php/composer.json
+          template_dest_path: composer.json
         -
           name: Gemfile
           language: ruby
-          template_src_path: %resources%/templates/ruby/gemfile
-          template_dest_path: %workspace%/Gemfile
+          template_src_path: templates/ruby/gemfile
+          template_dest_path: Gemfile
       """
     And the resource files available are:
-      | path                                    | content                       |
-      | %resources%/templates/php/composer.json | {}                            |
-      | %resources%/templates/ruby/Gemfile      | source 'https://rubygems.org' |
+      | path                        | content                       |
+      | templates/php/composer.json | {}                            |
+      | templates/ruby/Gemfile      | source 'https://rubygems.org' |
     And the programming languages available are:
       | name | key  |
       | PHP  | php  |

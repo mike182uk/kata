@@ -2,16 +2,12 @@
 
 namespace Mdb\Kata\Workspace\Handler;
 
-use Mdb\Kata\Console\Utility\PathNormalizer;
 use Mdb\Kata\TemplateRepository;
 use Mdb\Kata\Workspace\Command\InstallLanguageTemplatesCommand;
 use Symfony\Component\Filesystem\Filesystem;
 
 class InstallLanguageTemplatesHandler
 {
-    const RESOURCES_PATH_PLACEHOLDER = '%resources%';
-    const WORKSPACE_PATH_PLACEHOLDER = '%workspace%';
-
     /**
      * @var Filesystem
      */
@@ -45,11 +41,7 @@ class InstallLanguageTemplatesHandler
 
         foreach ($templates as $template) {
             $src = $template->getSrcFilePath();
-
-            $dest = PathNormalizer::normalizeWorkspaceFilePath(
-                $command->getWorkspacePath(),
-                $template->getDestFilePath()
-            );
+            $dest = sprintf('%s/%s', $command->getWorkspacePath(), $template->getDestFilePath());
 
             $this->filesystem->copy($src, $dest);
         }

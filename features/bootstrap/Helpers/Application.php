@@ -52,7 +52,7 @@ class Application
      */
     public static function getConfigPath()
     {
-        return Path::getResourceFilePath('%resources%/config.yml');
+        return Path::getResourceFilePath('config.yml');
     }
 
     private static function initApplication()

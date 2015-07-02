@@ -10,20 +10,20 @@ katas:
   -
     name: Fizz Buzz
     key: fizz_buzz
-    requirements_file_path: %resources%/katas/fizz_buzz.md
+    requirements_file_path: katas/fizz_buzz.md
   -
     name: String Calculator
     key: string_calculator
-    requirements_file_path: %resources%/katas/string_calculator.md
+    requirements_file_path: katas/string_calculator.md
 
 templates:
   -
     name: composer.json
     language: php
-    template_src_path: %resources%/templates/php/composer.json
-    template_dest_path: %workspace%/composer.json
+    template_src_path: templates/php/composer.json
+    template_dest_path: composer.json
   -
     name: Gemfile
     language: ruby
-    template_src_path: %resources%/templates/ruby/gemfile
-    template_dest_path: %workspace%/Gemfile
+    template_src_path: templates/ruby/gemfile
+    template_dest_path: Gemfile

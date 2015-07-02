@@ -2,8 +2,6 @@
 
 namespace Helpers;
 
-use Mdb\Kata\Console\Utility\PathNormalizer;
-
 class Path
 {
     /**
@@ -52,11 +50,7 @@ class Path
      */
     public static function getResourceFilePath($resourceFile)
     {
-        return preg_replace(
-            sprintf('/%s/', PathNormalizer::RESOURCES_PATH_PLACEHOLDER),
-            self::getResourcesPath(),
-            $resourceFile
-        );
+        return sprintf('%s/%s', self::getResourcesPath(), $resourceFile);
     }
 
     /**
@@ -67,12 +61,6 @@ class Path
      */
     public static function getWorkspaceFilePath($workspacePath, $workspaceFile)
     {
-        $path = preg_replace(
-            sprintf('/%s/', PathNormalizer::WORKSPACE_PATH_PLACEHOLDER),
-            $workspacePath,
-            $workspaceFile
-        );
-
-        return self::normalizeWorkspaceFilePath($path);
+        return sprintf('%s/%s', $workspacePath, $workspaceFile);
     }
 }
