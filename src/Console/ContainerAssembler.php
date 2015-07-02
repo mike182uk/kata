@@ -39,7 +39,7 @@ class ContainerAssembler
      */
     private function defineUtilites(Container $container)
     {
-        $container['utility.filesystem'] = function ($c) {
+        $container['utility.filesystem'] = function () {
             return new Filesystem();
         };
 
@@ -62,15 +62,15 @@ class ContainerAssembler
      */
     private function defineRepositories($container)
     {
-        $container['repository.katas'] = function ($c) {
+        $container['repository.katas'] = function () {
             return new KataRepository();
         };
 
-        $container['repository.languages'] = function ($c) {
+        $container['repository.languages'] = function () {
             return new LanguageRepository();
         };
 
-        $container['repository.templates'] = function ($c) {
+        $container['repository.templates'] = function () {
             return new TemplateRepository();
         };
     }
