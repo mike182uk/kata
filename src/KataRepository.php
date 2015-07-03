@@ -7,7 +7,7 @@ class KataRepository implements Repository
     /**
      * @var Kata[]
      */
-    private $katas;
+    private $katas = [];
 
     /**
      * @param Kata $kata

@@ -10,9 +10,11 @@ Feature: Developer can specify available programming languages in config file
         -
           name: PHP
           key: php
+          package_manager_install_command: composer install
         -
           name: Ruby
           key: ruby
+          package_manager_install_command: bundle install
       """
     When I execute the command "list:languages"
     Then I should see in the output:

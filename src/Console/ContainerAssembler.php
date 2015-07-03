@@ -14,12 +14,16 @@ use Mdb\Kata\KataRepository;
 use Mdb\Kata\LanguageRepository;
 use Mdb\Kata\TemplateRepository;
 use Mdb\Kata\Workspace\Handler\CreateWorkspaceDirectoryHandler;
+use Mdb\Kata\Workspace\Handler\InstallDependenciesHandler;
 use Mdb\Kata\Workspace\Handler\InstallLanguageTemplatesHandler;
 use Mdb\Kata\Workspace\Handler\InstallRequirementsFileHandler;
+use Mdb\Kata\Workspace\Handler\OutputMessageHandler;
+use Mdb\Kata\Workspace\Handler\OutputWorkspaceCreationSuccessMessageHandler;
 use Mdb\Kata\Workspace\Handler\ValidateKataHandler;
 use Mdb\Kata\Workspace\Handler\ValidateLanguageHandler;
 use Pimple\Container;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Process\ProcessBuilder;
 
 class ContainerAssembler
 {
@@ -96,8 +100,8 @@ class ContainerAssembler
             return new CreateWorkspaceCommand(
                 $c['utility.create_workspace_command_bus'],
                 $c['path.resources'],
-                $c['repository.katas'],
-                $c['repository.languages']
+                $c['repository.katas']->findAll(),
+                $c['repository.languages']->findAll()
             );
         };
     }
@@ -137,6 +141,24 @@ class ContainerAssembler
                 $c['utility.filesystem'],
                 $c['repository.templates']
             );
+        };
+
+        $container['workspace.command_handler.OutputWorkspaceCreationSuccessMessage'] = function ($c) {
+            return new OutputWorkspaceCreationSuccessMessageHandler(
+                $c['repository.katas'],
+                $c['repository.languages']
+            );
+        };
+
+        $container['workspace.command_handler.InstallDependencies'] = function ($c) {
+            return new InstallDependenciesHandler(
+                $c['repository.languages'],
+                new ProcessBuilder()
+            );
+        };
+
+        $container['workspace.command_handler.OutputMessage'] = function () {
+            return new OutputMessageHandler();
         };
     }
 }

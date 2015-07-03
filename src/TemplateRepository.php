@@ -7,7 +7,7 @@ class TemplateRepository implements Repository
     /**
      * @var Template[]
      */
-    private $templates;
+    private $templates = [];
 
     /**
      * @param Template $template

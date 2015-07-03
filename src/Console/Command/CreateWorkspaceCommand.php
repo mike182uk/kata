@@ -3,11 +3,12 @@
 namespace Mdb\Kata\Console\Command;
 
 use League\Tactician\CommandBus;
-use Mdb\Kata\KataRepository;
-use Mdb\Kata\LanguageRepository;
 use Mdb\Kata\Workspace\Command\CreateWorkspaceDirectoryCommand;
+use Mdb\Kata\Workspace\Command\InstallDependenciesCommand;
 use Mdb\Kata\Workspace\Command\InstallLanguageTemplatesCommand;
 use Mdb\Kata\Workspace\Command\InstallRequirementsFileCommand;
+use Mdb\Kata\Workspace\Command\OutputMessageCommand;
+use Mdb\Kata\Workspace\Command\OutputWorkspaceCreationSuccessMessageCommand;
 use Mdb\Kata\Workspace\Command\ValidateKataCommand;
 use Mdb\Kata\Workspace\Command\ValidateLanguageCommand;
 use Symfony\Component\Console\Command\Command;
@@ -31,31 +32,31 @@ class CreateWorkspaceCommand extends Command
     private $resourcesPath;
 
     /**
-     * @var KataRepository
+     * @var Kata[]
      */
-    private $kataRepository;
+    private $katas;
 
     /**
-     * @var LanguageRepository
+     * @var Language[]
      */
-    private $languageRepository;
+    private $languages;
 
     /**
-     * @param CommandBus         $commandBus
-     * @param string             $resourcesPath
-     * @param KataRepository     $kataRepository
-     * @param LanguageRepository $languageRepository
+     * @param CommandBus $commandBus
+     * @param string     $resourcesPath
+     * @param Kata[]     $katas
+     * @param Language[] $languages
      */
     public function __construct(
         CommandBus $commandBus,
         $resourcesPath,
-        KataRepository $kataRepository,
-        LanguageRepository $languageRepository
+        array $katas,
+        array $languages
     ) {
         $this->commandBus = $commandBus;
         $this->resourcesPath = $resourcesPath;
-        $this->kataRepository = $kataRepository;
-        $this->languageRepository = $languageRepository;
+        $this->katas = $katas;
+        $this->languages = $languages;
 
         parent::__construct();
     }
@@ -98,11 +99,11 @@ class CreateWorkspaceCommand extends Command
         $language = $input->getOption('language');
 
         if (is_null($kata)) {
-            $kata = $this->kataRepository->findOneByRandom()->getKey();
+            $kata = $this->katas[array_rand($this->katas)]->getKey();
         }
 
         if (is_null($language)) {
-            $language = $this->languageRepository->findOneByRandom()->getKey();
+            $language = $this->languages[array_rand($this->languages)]->getKey();
         }
 
         $commands = [
@@ -113,35 +114,28 @@ class CreateWorkspaceCommand extends Command
                 $kata,
                 sprintf('%s/%s', $workspacePath, self::REQUIREMENTS_FILE_FILENAME)
             ),
-            new InstallLanguageTemplatesCommand($language, $workspacePath),
+            new InstallLanguageTemplatesCommand(
+                $language,
+                $workspacePath
+            ),
+            new OutputWorkspaceCreationSuccessMessageCommand(
+                $workspacePath,
+                $kata,
+                $language,
+                $output
+            ),
+            new OutputMessageCommand(
+                '<info>Installing dependencies...</info>',
+                $output
+            ),
+            new InstallDependenciesCommand(
+                $language,
+                $workspacePath
+            ),
         ];
 
         foreach ($commands as $command) {
             $this->commandBus->handle($command);
         }
-
-        $output->writeln(
-            $this->getSuccessMessage($workspacePath, $kata, $language)
-        );
-    }
-
-    /**
-     * @param string $workspacePath
-     * @param string $kata
-     * @param string $language
-     *
-     * @return string
-     */
-    private function getSuccessMessage($workspacePath, $kata, $language)
-    {
-        $kata = $this->kataRepository->findOneByKey($kata)->getName();
-        $language = $this->languageRepository->findOneByKey($language)->getName();
-
-        return sprintf(
-            '<info>Kata workspace successfully created at <comment>%s</comment> with the kata <comment>%s</comment> using the language <comment>%s</comment></info>',
-            $workspacePath,
-            $kata,
-            $language
-        );
     }
 }

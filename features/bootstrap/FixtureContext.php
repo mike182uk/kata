@@ -1,6 +1,7 @@
 <?php
 
 use Behat\Behat\Context\Context;
+use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
 use Helpers\Application;
 use Helpers\Filesystem;
@@ -51,9 +52,12 @@ class FixtureContext implements Context
         $languageRepository = Fixture::getLanguageRepository();
 
         foreach ($table->getHash() as $language) {
+            $packageManagerInstallCommand = isset($language['package_manager_install_command']) ? $language['package_manager_install_command'] : '';
+
             $language = new Language(
                 $language['name'],
-                $language['key']
+                $language['key'],
+                $packageManagerInstallCommand
             );
 
             $languageRepository->insert($language);
@@ -96,6 +100,16 @@ class FixtureContext implements Context
     }
 
     /**
+     * @Given the resource file :filename contains:
+     */
+    public function theResourceFileContains($filename, PyStringNode $content)
+    {
+        $path = Path::getResourceFilePath($filename);
+
+        Filesystem::dumpFile($path, $content->getRaw());
+    }
+
+    /**
      * @beforeScenario @requiresKataFixtures
      */
     public function generateKataFixtures()
@@ -122,8 +136,8 @@ class FixtureContext implements Context
         $languageRepository = Fixture::getLanguageRepository();
 
         $languages = [
-            new Language('Foo', 'foo'),
-            new Language('Bar', 'bar'),
+            new Language('Foo', 'foo', 'echo foo'),
+            new Language('Bar', 'bar', 'echo bar'),
         ];
 
         foreach ($languages as $language) {

@@ -178,6 +178,29 @@ class CreateWorkspaceContext implements Context, SnippetAcceptingContext
     }
 
     /**
+     * @Then the install command for the :language package manager should have been run
+     */
+    public function theInstallCommandForThePackageManagerShouldHaveBeenRun($language)
+    {
+        switch ($language) {
+            case 'php':
+                $fileToCheck = Path::getWorkspaceFilePath(
+                    Registry::get(ConsoleContext::REGISTRY_KEY_WORKSPACE_PATH),
+                    'composer.lock'
+                );
+                break;
+            case 'ruby':
+                $fileToCheck = Path::getWorkspaceFilePath(
+                    Registry::get(ConsoleContext::REGISTRY_KEY_WORKSPACE_PATH),
+                    'Gemfile.lock'
+                );
+                break;
+        }
+
+        Assertion::file($fileToCheck);
+    }
+
+    /**
      * @afterScenario
      */
     public function cleanUpTempWorkspacePaths()

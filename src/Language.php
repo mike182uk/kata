@@ -15,13 +15,20 @@ class Language
     private $key;
 
     /**
+     * @var string
+     */
+    private $packageManagerInstallCommand;
+
+    /**
      * @param string $name
      * @param string $key
+     * @param string $packageManagerInstallCommand
      */
-    public function __construct($name, $key)
+    public function __construct($name, $key, $packageManagerInstallCommand)
     {
         $this->name = $name;
         $this->key = $key;
+        $this->packageManagerInstallCommand = $packageManagerInstallCommand;
     }
 
     /**
@@ -38,5 +45,13 @@ class Language
     public function getKey()
     {
         return $this->key;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPackageManagerInstallCommand()
+    {
+        return $this->packageManagerInstallCommand;
     }
 }

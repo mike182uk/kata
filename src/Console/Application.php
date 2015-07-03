@@ -91,7 +91,8 @@ class Application extends BaseApplication
         foreach ($config['languages'] as $languageHash) {
             $language = new Language(
                 $languageHash['name'],
-                $languageHash['key']
+                $languageHash['key'],
+                $languageHash['package_manager_install_command']
             );
 
             $languageRepository->insert($language);

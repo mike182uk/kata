@@ -7,7 +7,7 @@ class LanguageRepository implements Repository
     /**
      * @var Language[]
      */
-    private $languages;
+    private $languages = [];
 
     /**
      * @param Language $language
