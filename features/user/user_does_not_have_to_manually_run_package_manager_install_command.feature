@@ -22,9 +22,9 @@ Feature: User does not have to manually run package manager install command
       """
     And the resource file "templates/ruby/Gemfile" contains:
       """
-      source "https://rubygems.org"
+      source 'https://rubygems.org'
 
-      gem "rspec"
+      gem 'json'
       """
 
   @requiresKataFixtures

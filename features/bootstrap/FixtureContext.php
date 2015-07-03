@@ -52,7 +52,9 @@ class FixtureContext implements Context
         $languageRepository = Fixture::getLanguageRepository();
 
         foreach ($table->getHash() as $language) {
-            $packageManagerInstallCommand = isset($language['package_manager_install_command']) ? $language['package_manager_install_command'] : '';
+            $packageManagerInstallCommand = isset($language['package_manager_install_command']) ?
+                $language['package_manager_install_command'] :
+                'echo "Foo"';
 
             $language = new Language(
                 $language['name'],
@@ -136,8 +138,8 @@ class FixtureContext implements Context
         $languageRepository = Fixture::getLanguageRepository();
 
         $languages = [
-            new Language('Foo', 'foo', 'echo foo'),
-            new Language('Bar', 'bar', 'echo bar'),
+            new Language('Foo', 'foo', 'echo "foo"'),
+            new Language('Bar', 'bar', 'echo "bar"'),
         ];
 
         foreach ($languages as $language) {

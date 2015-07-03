@@ -27,5 +27,5 @@ templates:
   -
     name: Gemfile
     language: ruby
-    template_src_path: templates/ruby/gemfile
+    template_src_path: templates/ruby/Gemfile
     template_dest_path: Gemfile

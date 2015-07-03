@@ -192,9 +192,8 @@ class CreateWorkspaceContext implements Context, SnippetAcceptingContext
             case 'ruby':
                 $fileToCheck = Path::getWorkspaceFilePath(
                     Registry::get(ConsoleContext::REGISTRY_KEY_WORKSPACE_PATH),
-                    'Gemfile.lock'
+                    '.bundle/config'
                 );
-                break;
         }
 
         Assertion::file($fileToCheck);

@@ -11,8 +11,8 @@ class InstallDependenciesHandler
     /**
      * @var LanguageRepository
      */
-    private $languageRepository
-    ;
+    private $languageRepository;
+
     /**
      * @var ProcessBuilder
      */
