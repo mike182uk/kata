@@ -2,6 +2,7 @@
 
 [![Build Status](https://img.shields.io/travis/mike182uk/kata.svg?style=flat-square)](http://travis-ci.org/mike182uk/kata)
 [![Scrutinizer Quality Score](https://img.shields.io/scrutinizer/g/mike182uk/kata.svg?style=flat-square)](https://scrutinizer-ci.com/g/mike182uk/kata/)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/743bce02-89ef-4504-af71-d55f267fbc05/mini.png)](https://insight.sensiolabs.com/projects/743bce02-89ef-4504-af71-d55f267fbc05)
 [![License](https://img.shields.io/github/license/mike182uk/kata.svg?style=flat-square)](https://github.com/mike182uk/kata)
 
 ##Prerequisites

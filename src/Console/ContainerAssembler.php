@@ -99,7 +99,6 @@ class ContainerAssembler
         $container['console.command.create:workspace'] = function ($c) {
             return new CreateWorkspaceCommand(
                 $c['utility.create_workspace_command_bus'],
-                $c['path.resources'],
                 $c['repository.katas']->findAll(),
                 $c['repository.languages']->findAll()
             );

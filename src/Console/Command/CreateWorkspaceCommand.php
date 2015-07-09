@@ -27,11 +27,6 @@ class CreateWorkspaceCommand extends Command
     private $commandBus;
 
     /**
-     * @var string
-     */
-    private $resourcesPath;
-
-    /**
      * @var Kata[]
      */
     private $katas;
@@ -43,18 +38,15 @@ class CreateWorkspaceCommand extends Command
 
     /**
      * @param CommandBus $commandBus
-     * @param string     $resourcesPath
      * @param Kata[]     $katas
      * @param Language[] $languages
      */
     public function __construct(
         CommandBus $commandBus,
-        $resourcesPath,
         array $katas,
         array $languages
     ) {
         $this->commandBus = $commandBus;
-        $this->resourcesPath = $resourcesPath;
         $this->katas = $katas;
         $this->languages = $languages;
 
