@@ -1,4 +1,4 @@
 /bin/*
 !/bin/kata
-!/bin/kata.phar
 /vendor/
+kata.phar

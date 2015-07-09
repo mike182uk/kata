@@ -2,7 +2,7 @@
   "directories": ["src", "resources"],
   "files": ["LICENSE", "AUTHORS.md"],
   "main": "bin/kata",
-  "output": "bin/kata.phar",
+  "output": "kata.phar",
   "chmod": "0755",
   "stub": true,
   "finder": [
