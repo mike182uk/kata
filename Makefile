@@ -43,4 +43,4 @@ release:
 	@echo "Version ${TAG} tagged. Make sure you push to github:"
 	@echo "git push origin master"
 	@echo "git push origin gh-pages"
-	@echo "git push ${TAG}"
+	@echo "git push --tags"
