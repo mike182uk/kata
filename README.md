@@ -32,6 +32,12 @@ kata create:workspace -k fizz_buzz -l php ./fizz_buzz_kata
 
 `kata` and `language` are both optional parameters - If you do not pass a `kata` or `language` parameter, one will be selected at random.
 
+Once the kata workspace has been created, the package manager for the selected language will be run automatically. To prevent this you can use the `--no-deps` parameter:
+
+```bash
+kata create:workspace -k fizz_buzz -l php ./fizz_buzz_kata --no-deps
+```
+
 ###List available katas
 
 ```bash

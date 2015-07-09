@@ -1,5 +1,9 @@
 #Changelog
 
+##0.3.0
+
+- `--no-deps` option can be passed when creating a workspace to prevent package manager from installing dependencies
+
 ##0.2.0
 
 - Run package manager install command once workspace is created
