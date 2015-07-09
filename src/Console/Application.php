@@ -14,7 +14,7 @@ use Symfony\Component\Yaml\Yaml;
 class Application extends BaseApplication
 {
     const NAME = 'kata';
-    const VERSION = '0.2.0';
+    const VERSION = '0.3.0';
 
     /**
      * @var Container
