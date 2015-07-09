@@ -27,7 +27,11 @@ class ConsoleContext implements Context
             $options = explode(',', $options);
 
             foreach ($options as $option) {
-                list($option, $value) = explode('=', $option);
+                if (strpos($option, '=') !== false) {
+                    list($option, $value) = explode('=', $option);
+                } else {
+                    $value = null;
+                }
 
                 if ($command == 'create:workspace') {
                     switch ($option) {

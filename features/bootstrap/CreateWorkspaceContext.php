@@ -182,21 +182,19 @@ class CreateWorkspaceContext implements Context, SnippetAcceptingContext
      */
     public function theInstallCommandForThePackageManagerShouldHaveBeenRun($language)
     {
-        switch ($language) {
-            case 'php':
-                $fileToCheck = Path::getWorkspaceFilePath(
-                    Registry::get(ConsoleContext::REGISTRY_KEY_WORKSPACE_PATH),
-                    'composer.lock'
-                );
-                break;
-            case 'ruby':
-                $fileToCheck = Path::getWorkspaceFilePath(
-                    Registry::get(ConsoleContext::REGISTRY_KEY_WORKSPACE_PATH),
-                    '.bundle/config'
-                );
-        }
+        $fileToCheck = $this->getPackageManagerPostInstallFileToCheck($language);
 
         Assertion::file($fileToCheck);
+    }
+
+    /**
+     * @Then the install command for the :language package manager should not have been run
+     */
+    public function theInstallCommandForThePackageManagerShouldNotHaveBeenRun($language)
+    {
+        $fileToCheck = $this->getPackageManagerPostInstallFileToCheck($language);
+
+        Assertion::false(file_exists($fileToCheck));
     }
 
     /**
@@ -213,5 +211,29 @@ class CreateWorkspaceContext implements Context, SnippetAcceptingContext
         foreach (Path::getCreatedPaths() as $path) {
             Filesystem::remove($path);
         }
+    }
+
+    /**
+     * @param string $language
+     *
+     * @return string
+     */
+    private function getPackageManagerPostInstallFileToCheck($language)
+    {
+        switch ($language) {
+            case 'php':
+                $fileToCheck = Path::getWorkspaceFilePath(
+                    Registry::get(ConsoleContext::REGISTRY_KEY_WORKSPACE_PATH),
+                    'composer.lock'
+                );
+                break;
+            case 'ruby':
+                $fileToCheck = Path::getWorkspaceFilePath(
+                    Registry::get(ConsoleContext::REGISTRY_KEY_WORKSPACE_PATH),
+                    '.bundle/config'
+                );
+        }
+
+        return $fileToCheck;
     }
 }

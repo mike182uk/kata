@@ -86,6 +86,12 @@ class CreateWorkspaceCommand extends Command
                 InputOption::VALUE_REQUIRED,
                 'Language to use for kata'
             )
+            ->addOption(
+                'no-deps',
+                null,
+                InputOption::VALUE_NONE,
+                'Do not install any dependencies'
+            )
         ;
     }
 
@@ -97,6 +103,7 @@ class CreateWorkspaceCommand extends Command
         $workspacePath = rtrim($input->getArgument('path'), '/');
         $kata = $input->getOption('kata');
         $language = $input->getOption('language');
+        $noDeps = $input->getOption('no-deps');
 
         if (is_null($kata)) {
             $kata = $this->katas[array_rand($this->katas)]->getKey();
@@ -124,15 +131,19 @@ class CreateWorkspaceCommand extends Command
                 $language,
                 $output
             ),
-            new OutputMessageCommand(
+        ];
+
+        if (!$noDeps) {
+            $commands[] = new OutputMessageCommand(
                 '<info>Installing dependencies...</info>',
                 $output
-            ),
-            new InstallDependenciesCommand(
+            );
+
+            $commands[] = new InstallDependenciesCommand(
                 $language,
                 $workspacePath
-            ),
-        ];
+            );
+        }
 
         foreach ($commands as $command) {
             $this->commandBus->handle($command);
