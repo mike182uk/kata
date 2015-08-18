@@ -1,8 +1,8 @@
-#String Calculator
+# String Calculator
 
-Create a simple string calculator with a method that takes a string of numbers (separated by a delimiter) and returns an integer of the sum of all of the numbers in the string .
+Create a string calculator with a single method that takes a string of numbers (separated by a delimiter) and returns an integer of the sum of all of the numbers in the string
 
-##Requirements
+## Requirements
   - Numbers delimited by a comma
   - Allow the method to handle an unknown amount of numbers
   - Allow the method to handle new lines between numbers (instead of delimiter)

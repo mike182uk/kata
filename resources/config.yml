@@ -7,6 +7,10 @@ languages:
     name: Ruby
     key: ruby
     package_manager_install_command: bundle install --path vendor --binstubs
+  -
+    name: Javascript
+    key: js
+    package_manager_install_command: npm install
 
 katas:
   -
@@ -17,6 +21,10 @@ katas:
     name: String Calculator
     key: string_calculator
     requirements_file_path: katas/string_calculator.md
+  -
+    name: Roman Numerals
+    key: roman_numerals
+    requirements_file_path: katas/roman_numerals.md
 
 templates:
   -
@@ -29,3 +37,13 @@ templates:
     language: ruby
     template_src_path: templates/ruby/Gemfile
     template_dest_path: Gemfile
+  -
+    name: package.json
+    language: js
+    template_src_path: templates/js/package.json
+    template_dest_path: package.json
+  -
+    name: jasmine.json
+    language: js
+    template_src_path: templates/js/jasmine.json
+    template_dest_path: spec/support/jasmine.json
