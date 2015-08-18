@@ -2,6 +2,8 @@
 
 namespace Mdb\Kata\Workspace\Command;
 
+use Symfony\Component\Console\Output\OutputInterface;
+
 class InstallDependenciesCommand
 {
     /**
@@ -15,13 +17,15 @@ class InstallDependenciesCommand
     private $workspacePath;
 
     /**
-     * @param string $lanuage
-     * @param string $workspacePath
+     * @param string          $lanuage
+     * @param string          $workspacePath
+     * @param OutputInterface $consoleOutput
      */
-    public function __construct($lanuage, $workspacePath)
+    public function __construct($lanuage, $workspacePath, OutputInterface $consoleOutput)
     {
         $this->language = $lanuage;
         $this->workspacePath = $workspacePath;
+        $this->consoleOutput = $consoleOutput;
     }
 
     /**
@@ -38,5 +42,13 @@ class InstallDependenciesCommand
     public function getWorkspacePath()
     {
         return $this->workspacePath;
+    }
+
+    /**
+     * @return OutputInterface
+     */
+    public function getConsoleOutput()
+    {
+        return $this->consoleOutput;
     }
 }

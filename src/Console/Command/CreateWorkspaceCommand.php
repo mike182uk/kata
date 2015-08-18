@@ -133,7 +133,8 @@ class CreateWorkspaceCommand extends Command
 
             $commands[] = new InstallDependenciesCommand(
                 $language,
-                $workspacePath
+                $workspacePath,
+                $output
             );
         }
 

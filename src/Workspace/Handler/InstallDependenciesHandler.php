@@ -35,6 +35,7 @@ class InstallDependenciesHandler
      */
     public function handle(InstallDependenciesCommand $command)
     {
+        $consoleOuput = $command->getConsoleOutput();
         $language = $this->languageRepository->findOneByKey($command->getLanguage());
 
         $packageManagerInstallCommand = $language->getPackageManagerInstallCommand();
@@ -45,6 +46,8 @@ class InstallDependenciesHandler
 
         $process = $this->processBuilder->getProcess();
 
-        $process->run();
+        $process->run(function ($type, $buffer) use ($consoleOuput, $packageManagerInstallCommand) {
+            $consoleOuput->write('<comment>[Package Manager] > </comment>'.trim($buffer), true);
+        });
     }
 }

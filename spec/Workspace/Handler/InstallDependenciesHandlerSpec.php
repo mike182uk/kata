@@ -7,6 +7,7 @@ use Mdb\Kata\LanguageRepository;
 use Mdb\Kata\Workspace\Command\InstallDependenciesCommand;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
+use Symfony\Component\Console\Output\Output;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\ProcessBuilder;
 
@@ -27,7 +28,8 @@ class InstallDependenciesHandlerSpec extends ObjectBehavior
         ProcessBuilder $processBuilder,
         Language $language,
         Process $process,
-        InstallDependenciesCommand $command
+        InstallDependenciesCommand $command,
+        Output $consoleOutput
     ) {
         $languageKey = 'foo';
         $packageManagerInstallCommand = 'echo foo';
@@ -36,6 +38,7 @@ class InstallDependenciesHandlerSpec extends ObjectBehavior
 
         $command->getLanguage()->willReturn($languageKey);
         $command->getWorkspacePath()->willReturn($workspacePath);
+        $command->getConsoleOutput()->willReturn($consoleOutput);
 
         $languageRepository->findOneByKey($languageKey)->willReturn($language);
 
@@ -46,7 +49,7 @@ class InstallDependenciesHandlerSpec extends ObjectBehavior
 
         $processBuilder->getProcess()->willReturn($process);
 
-        $process->run()->shouldBeCalled();
+        $process->run(Argument::type('closure'))->shouldBeCalled();
 
         $this->handle($command);
     }
