@@ -7,11 +7,9 @@ Feature: User can specify programming language to use for kata
     Given the programming languages available are:
       | name | key  |
       | PHP  | php  |
-      | Ruby | ruby |
     And the programming language templates available are:
       | name          | language | template_src_path           | template_dest_path |
       | composer.json | php      | templates/php/composer.json | composer.json      |
-      | Gemfile       | ruby     | templates/ruby/gemfile      | Gemfile            |
 
   @requiresKataFixtures
   Scenario: User specifies programming language

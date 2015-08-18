@@ -7,15 +7,9 @@ Feature: User can run package manager install command manually
     Given the programming languages available are:
       | name | key  |
       | PHP  | php  |
-      | Ruby | ruby |
 
   @requiresKataFixtures @requiresLanguageFixtures
-  Scenario Outline: Package manager install command is not run
+  Scenario: Package manager install command is not run
     When I execute the command "create:workspace" with the options "path=foo,--no-deps"
     Then a new kata workspace should be created at "foo"
-    And the install command for the "<language>" package manager should not have been run
-
-    Examples:
-      | language |
-      | php      |
-      | ruby     |
+    And the install command for the "php" package manager should not have been run

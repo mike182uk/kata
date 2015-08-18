@@ -12,8 +12,8 @@ Feature: User can see details of the newly created kata workspace
       | name | key  |
       | PHP  | php  |
     And the programming language templates available are:
-      | name          | language | template_src_path      | template_dest_path |
-      | Gemfile       | ruby     | templates/ruby/gemfile | Gemfile            |
+      | name          | language | template_src_path           | template_dest_path |
+      | composer.json | php      | templates/php/composer.json | composer.json      |
 
   Scenario: User sees details of newly created kata workspace
     When I execute the command "create:workspace" with the options "path=foo,--kata=fizz_buzz,--language=php"

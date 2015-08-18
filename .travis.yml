@@ -7,8 +7,6 @@ php:
   - hhvm
 
 before_script:
-  - sudo apt-get install ruby-full
-  - gem install bundler
   - travis_retry composer self-update
   - travis_retry composer install --no-interaction --prefer-source
 
