@@ -46,7 +46,7 @@ class InstallDependenciesHandler
 
         $process = $this->processBuilder->getProcess();
 
-        $process->run(function ($type, $buffer) use ($consoleOuput, $packageManagerInstallCommand) {
+        $process->run(function ($type, $buffer) use ($consoleOuput) {
             $consoleOuput->write('<comment>[Package Manager] > </comment>'.trim($buffer), true);
         });
     }
