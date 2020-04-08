@@ -1,15 +1,12 @@
-#Kata
+#### ⚠️ This project is no longer maintained
 
-[![Build Status](https://img.shields.io/travis/mike182uk/kata.svg?style=flat-square)](http://travis-ci.org/mike182uk/kata)
-[![Scrutinizer Quality Score](https://img.shields.io/scrutinizer/g/mike182uk/kata.svg?style=flat-square)](https://scrutinizer-ci.com/g/mike182uk/kata/)
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/743bce02-89ef-4504-af71-d55f267fbc05/mini.png)](https://insight.sensiolabs.com/projects/743bce02-89ef-4504-af71-d55f267fbc05)
-[![License](https://img.shields.io/github/license/mike182uk/kata.svg?style=flat-square)](https://github.com/mike182uk/kata)
+# Kata
 
-##Prerequisites
+## Prerequisites
 
 1. PHP >=5.5.0
 
-##Installation
+## Installation
 
 ```bash
 wget https://mike182uk.github.io/kata/downloads/kata-latest.phar # Download the phar
@@ -17,9 +14,9 @@ chmod +x kata.phar # Make the phar executeable
 mv kata.phar /usr/bin/kata # Move the phar to your bin directory (optional)
 ```
 
-##Usage
+## Usage
 
-###Create a new kata workspace
+### Create a new kata workspace
 
 ```bash
 kata create:workspace [-k|--kata <kata>] [-l|--language <language>] <path>
@@ -39,13 +36,13 @@ Once the kata workspace has been created, the package manager for the selected l
 kata create:workspace -k fizz_buzz -l php ./fizz_buzz_kata --no-deps
 ```
 
-###List available katas
+### List available katas
 
 ```bash
 kata list:katas
 ```
 
-###List available languages
+### List available languages
 
 ```bash
 kata list:languages
